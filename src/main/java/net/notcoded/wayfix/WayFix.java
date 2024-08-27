@@ -1,15 +1,23 @@
 package net.notcoded.wayfix;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.notcoded.wayfix.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 public class WayFix implements ClientModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(WayFix.class);
+    public static ModConfig config;
 
     @Override
     public void onInitializeClient() {
+
+        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+
         // TODO:
 
         // fix fullscreen in wrong location

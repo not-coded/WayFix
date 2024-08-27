@@ -21,6 +21,9 @@
   "entrypoints": {
     "client": [
       "net.notcoded.wayfix.WayFix"
+    ],
+    "modmenu": [
+      "net.notcoded.wayfix.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -29,7 +32,11 @@
 
   "depends": {
     "fabricloader": ">=0.14.20",
+    "cloth-config2": ">=4.9.0",
     "minecraft": "${minecraftVersion}",
     "java": ">=${javaVersion}"
+  },
+  "recommends": {
+    "modmenu": "*"
   }
 }

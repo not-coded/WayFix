@@ -3,6 +3,7 @@ package net.notcoded.wayfix.mixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.Window;
+import net.notcoded.wayfix.WayFix;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +28,7 @@ public abstract class MinecraftClientMixin {
         *///?}
 
         // "Auto" or Gui Scale 0 already auto-scales it
-        return guiScale != 0 ? d * getScaleFactor() : d;
+        return guiScale != 0 && WayFix.config.autoScaleGUI ? d * getScaleFactor() : d;
     }
 
     @Unique

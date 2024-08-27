@@ -12,10 +12,18 @@ base {
 	archivesName = archivesBaseName
 }
 
+repositories {
+	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://maven.terraformersmc.com/releases/" }
+}
+
 dependencies {
 	minecraft "com.mojang:minecraft:${property('deps.minecraft')}"
 	mappings "net.fabricmc:yarn:${property('deps.yarn_mappings')}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${property('deps.fabric_loader')}"
+
+	modImplementation("me.shedaniel.cloth:cloth-config-fabric:${property('deps.cloth_config_version')}")
+	modImplementation("com.terraformersmc:modmenu:${property('deps.mod_menu_version')}")
 
 	implementation "org.lwjgl:lwjgl-glfw:3.3.2"
 }

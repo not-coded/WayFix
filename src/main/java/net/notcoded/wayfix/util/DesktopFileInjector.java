@@ -51,6 +51,7 @@ public class DesktopFileInjector {
 
     //? if >=1.19.3 {
     public static void setIcon(List<InputSupplier<InputStream>> icons) {
+        if(!WayFix.config.injectIcon) return;
         for (InputSupplier<InputStream> supplier : icons) {
             try {
                 BufferedImage image = ImageIO.read(supplier.get());
@@ -66,6 +67,7 @@ public class DesktopFileInjector {
     //?} elif <1.19.3 {
     
     /*public static void setIcon(InputStream icon16, InputStream icon32) {
+        if(!WayFix.config.injectIcon) return;
         byte[] icon16Byte;
         byte[] icon32Byte;
 
