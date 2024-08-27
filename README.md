@@ -5,6 +5,7 @@
 Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 ### Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).
+### With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).
 
 ## Features
 - **Auto Scale GUI**
@@ -19,6 +20,8 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
   - Specify Monitor ***(todo)***
     - Specify which monitor you want to fullscreen Minecraft to.
+
+
 
 ## Building
 - Clone the repository
