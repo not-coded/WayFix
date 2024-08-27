@@ -21,9 +21,9 @@ public abstract class MinecraftClientMixin {
     @ModifyArg(method = "onResolutionChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setScaleFactor(D)V"))
     private double fixHiDPIScaling(double d) {
         int guiScale;
-        //? if >=1.19.3 {
+        //? if >=1.19 {
         guiScale = this.options.getGuiScale().getValue();
-        //?} elif <1.19.3 {
+        //?} elif <1.19 {
         /*guiScale = this.options.guiScale;
         *///?}
 

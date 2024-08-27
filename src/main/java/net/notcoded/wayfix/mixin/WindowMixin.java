@@ -34,14 +34,12 @@ import java.io.InputStream;
 //?}
 
 /*
-- Credits to moehreag
+- Credits to moehreag for most of the code
 - https://github.com/moehreag/wayland-fixes
 */
 
 @Mixin(Window.class)
 public class WindowMixin {
-    @Shadow @Final private MonitorTracker monitorTracker;
-
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
     private void onWindowHints(WindowEventHandler windowEventHandler, MonitorTracker monitorTracker, WindowSettings windowSettings, String string, String string2, CallbackInfo ci) {
         if (isWayland()) {
