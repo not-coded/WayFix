@@ -3,7 +3,7 @@
   "text.autoconfig.wayfix.title": "WayFix Options",
 
   "text.autoconfig.wayfix.option.autoScaleGUI": "Auto Scale GUI",
-  "text.autoconfig.wayfix.option.autoScaleGUI.@Tooltip": "Auto scales the GUI scale depending on your display's scaling. [may look weird when windowed] (e.g. 2 GUI Scale on 1920x1080 at 100% -> 4 GUI Scale on 3840x2160 at 200%)",
+  "text.autoconfig.wayfix.option.autoScaleGUI.@Tooltip": "Auto-scales the GUI scale depending on your display's scaling. [may look weird when windowed] (e.g. 2 GUI Scale on 1920x1080 at 100% -> 4 GUI Scale on 3840x2160 at 200%)",
 
   "text.autoconfig.wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
   "text.autoconfig.wayfix.option.injectIcon.@Tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon (requires restart).",
