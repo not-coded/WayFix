@@ -4,6 +4,9 @@
   "package": "net.notcoded.wayfix.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "GLXMixin",
+    "MinecraftClientMixin",
+    "WindowMixin"
   ],
   "injectors": {
     "defaultRequire": 1
