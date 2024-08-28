@@ -18,10 +18,6 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
   - Use Primary Monitor
     - Full-screens the window in your primary monitor. ***(Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)***
 
-  - Specify Monitor ***(todo)***
-    - Specify which monitor you want to fullscreen Minecraft to.
-
-
 
 ## Building
 - Clone the repository
