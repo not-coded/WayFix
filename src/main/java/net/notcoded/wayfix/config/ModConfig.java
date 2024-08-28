@@ -13,6 +13,9 @@ public class ModConfig implements ConfigData {
     @Tooltip
     public boolean injectIcon = true;
 
+    @Tooltip
+    public boolean keyModifiersFix = true;
+
     @CollapsibleObject
     @Tooltip
     public Fullscreen fullscreen = new Fullscreen();

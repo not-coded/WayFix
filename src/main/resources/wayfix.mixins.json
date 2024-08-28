@@ -6,6 +6,7 @@
   "client": [
     "GLXMixin",
     "MinecraftClientMixin",
+    "TextFieldWidgetMixin",
     "WindowMixin"
   ],
   "injectors": {

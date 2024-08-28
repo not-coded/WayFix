@@ -3,6 +3,7 @@ package net.notcoded.wayfix.util;
 import net.minecraft.client.MinecraftClient;
 //? if >=1.19.3 {
 import net.minecraft.resource.InputSupplier;
+import java.util.List;
 //?} elif <1.19.3 {
 /*import java.util.ArrayList;
 import java.util.Arrays;
