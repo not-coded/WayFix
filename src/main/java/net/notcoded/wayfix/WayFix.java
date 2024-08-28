@@ -14,14 +14,8 @@ public class WayFix implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-
-        // TODO:
-
-        // fix fullscreen in wrong location
-        // add config option to let user specify fullscreen location (screen) (default option: primary monitor)
     }
 
     public static boolean isWayland() {

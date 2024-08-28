@@ -1,5 +1,4 @@
 {
-  "wayfix.title": "WayFix",
   "text.autoconfig.wayfix.title": "WayFix Options",
 
   "text.autoconfig.wayfix.option.autoScaleGUI": "Auto Scale GUI",
@@ -8,9 +7,12 @@
   "text.autoconfig.wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
   "text.autoconfig.wayfix.option.injectIcon.@Tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon (requires restart).",
 
+  "text.autoconfig.wayfix.option.keyModifiersFix": "Key Modifiers Fix",
+  "text.autoconfig.wayfix.option.keyModifiersFix.@Tooltip": "Fixes keyboard combinations such as 'CTRL + A' or 'CTRL + C' being sent in chat.",
+
   "text.autoconfig.wayfix.option.fullscreen": "Fullscreen",
-  "text.autoconfig.wayfix.option.fullscreen.@Tooltip": "Options related to full-screening the game (Wayland breaks the Fullscreen functionality a little bit)",
+  "text.autoconfig.wayfix.option.fullscreen.@Tooltip": "Options related to full-screening the game (Wayland breaks the default Minecraft Fullscreen functionality a little bit)",
 
   "text.autoconfig.wayfix.option.fullscreen.usePrimaryMonitor": "Use Primary Monitor",
-  "text.autoconfig.wayfix.option.fullscreen.usePrimaryMonitor.@Tooltip": "Full-screens the window in your primary monitor. (Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)"
+  "text.autoconfig.wayfix.option.fullscreen.usePrimaryMonitor.@Tooltip": "Full-screens the window in your primary monitor. (by default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)"
 }
