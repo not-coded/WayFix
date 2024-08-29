@@ -8,16 +8,15 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 ### With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).
 
 ## Features
-- **Auto Scale GUI**
+- Auto Scale GUI
   - Auto-scales the GUI scale depending on your display's scaling. ***[may look weird when windowed]*** (e.g. 2 GUI Scale on 1920x1080 at 100% -> 4 GUI Scale on 3840x2160 at 200%)
 
 - Inject Minecraft Icon at Startup
   - Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon. 
 
 - **Fullscreen**
-  - Use Primary Monitor
-    - Full-screens the window in your primary monitor. ***(by default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations)***
-
+  - Specify Monitor *(looks different in-game)* ***(by default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations)***
+    - Specify which monitor you want to fullscreen Minecraft to. (primary monitor by default) (must turn on in seperate config option)
 
 ## Building
 - Clone the repository

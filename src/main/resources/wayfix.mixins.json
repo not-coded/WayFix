@@ -6,6 +6,7 @@
   "client": [
     "GLXMixin",
     "MinecraftClientMixin",
+    "MonitorTrackerMixin",
     "TextFieldWidgetMixin",
     "WindowMixin"
   ],

@@ -13,6 +13,17 @@
   "text.autoconfig.wayfix.option.fullscreen": "Fullscreen",
   "text.autoconfig.wayfix.option.fullscreen.@Tooltip": "Options related to full-screening the game (Wayland breaks the default Minecraft Fullscreen functionality a little bit)",
 
-  "text.autoconfig.wayfix.option.fullscreen.usePrimaryMonitor": "Use Primary Monitor",
-  "text.autoconfig.wayfix.option.fullscreen.usePrimaryMonitor.@Tooltip": "Full-screens the window in your primary monitor. (by default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)"
+  "text.autoconfig.wayfix.option.fullscreen.useMonitorID": "Use Monitor ID",
+  "text.autoconfig.wayfix.option.fullscreen.useMonitorID.@Tooltip": "Full-screens the window in the selected monitor (view list below!!!!).",
+
+  "text.autoconfig.wayfix.option.fullscreen.monitorID": "Select Monitor",
+  "text.autoconfig.wayfix.option.fullscreen.monitorID.@Tooltip": "Full-screens the window in the selected monitor (view list below!!!!). (by default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)",
+
+  "text.autoconfig.wayfix.option.fullscreen.monitorSelector": "Monitors List (for above option)",
+  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors": "Monitors (only to look and copy ID from! [DO NOT MODIFY])",
+
+  "text.autoconfig.wayfix.option.Monitors": "Monitor",
+  "text.autoconfig.wayfix.option.Monitors.name": "Monitor Name (do not modify)",
+  "text.autoconfig.wayfix.option.Monitors.id": "Monitor ID (copy to clipboard)",
+  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor (do not modify)"
 }

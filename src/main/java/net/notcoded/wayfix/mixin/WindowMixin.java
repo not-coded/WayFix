@@ -9,6 +9,7 @@ import net.notcoded.wayfix.WayFix;
 import net.notcoded.wayfix.util.DesktopFileInjector;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -51,7 +52,20 @@ public class WindowMixin {
 
     @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
     private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WayFix.config.fullscreen.usePrimaryMonitor ? instance.getMonitor(GLFW.glfwGetPrimaryMonitor()) : instance.getMonitor(window);
+        return WayFix.config.fullscreen.useMonitorID ? getMonitor(instance) : instance.getMonitor(window);
+    }
+
+    @Unique
+    private Monitor getMonitor(MonitorTracker instance) {
+        long configMonitorID = WayFix.config.fullscreen.monitorID;
+        if(configMonitorID <= 0 || instance.getMonitor(configMonitorID) == null) {
+            WayFix.LOGGER.warn("Failed to get Monitor ID from config!");
+            WayFix.LOGGER.warn("Perhaps you set it incorrectly? (current value: {})", configMonitorID);
+            configMonitorID = GLFW.glfwGetPrimaryMonitor();
+            WayFix.LOGGER.warn("Using primary monitor instead. (value: {})", configMonitorID);
+        }
+
+        return instance.getMonitor(configMonitorID);
     }
     
     @Inject(method = "setIcon", at = @At("HEAD"), cancellable = true)
