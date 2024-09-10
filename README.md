@@ -12,9 +12,9 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 </div>
 
 > [!TIP]
-> Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).
->
-> With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).
+> **Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).**
+> 
+> **With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).**
 
 ## Features
 - Auto Scale GUI
