@@ -9,12 +9,11 @@
 
 Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
-</div>
+**Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).**
+<br>
+**With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).**
 
-> [!TIP]
-> **Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).**
-> 
-> **With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).**
+</div>
 
 ## Features
 - Auto Scale GUI
@@ -32,5 +31,5 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 ## Building
 - Clone the repository
-    - `git clone https://github.com/not-coded/WayFix`
+  - `git clone https://github.com/not-coded/WayFix`
 - Run `./gradlew chiseledBuild`
