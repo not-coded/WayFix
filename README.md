@@ -1,11 +1,20 @@
+<div align="center">
+
+<img src="https://cdn.modrinth.com/data/hxIWsdEF/11a8bb4badc214361593ec6d33e29998bcc6ef46.png" height=128 alt="WayFix Logo"/>
+<br>
+
 # WayFix
 
 [![Supports minecraft versions from 1.16](https://notcoded.needs.rest/r/badge_minecraft_1.16plus.svg)](https://minecraft.net) [![Cloth Config API](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/requires/cloth-config-api_vector.svg)](https://www.modrinth.com/mod/cloth-config)  ![Won't support forge](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/unsupported/forge_vector.svg)
 
 Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
-### Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).
-### With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).
+</div>
+
+> [!TIP]
+> Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).
+>
+> With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).
 
 ## Features
 - Auto Scale GUI
