@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.*;
 import net.minecraft.client.util.Monitor;
+import net.minecraft.client.util.VideoMode;
 import net.notcoded.wayfix.WayFix;
 import org.lwjgl.glfw.GLFW;
 
@@ -40,6 +41,7 @@ public class ModConfig implements ConfigData {
         public String monitorInfo;
         public String monitorName;
         @Excluded public long monitorID;
+        @PrefixText
         public boolean primary;
 
         public Monitors() {
@@ -67,11 +69,13 @@ public class ModConfig implements ConfigData {
     }
 
     public static class MonitorSelector {
+        @PrefixText
         public ArrayList<Monitors> monitors = new ArrayList<>();
 
         public MonitorSelector(ArrayList<Monitor> monitors) {
             for(Monitor monitor : monitors) {
-                this.monitors.add(new Monitors(monitor.getCurrentVideoMode().toString(), monitor.getHandle()));
+                VideoMode mode = monitor.getCurrentVideoMode();
+                this.monitors.add(new Monitors(String.format("%sx%s@%s", mode.getWidth(), mode.getHeight(), mode.getRefreshRate()), monitor.getHandle()));
             }
         }
     }

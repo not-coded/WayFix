@@ -20,10 +20,12 @@
   "text.autoconfig.wayfix.option.fullscreen.monitorName.@Tooltip": "Full-screens the window in the selected monitor (view list below!!!!). (by default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)",
 
   "text.autoconfig.wayfix.option.fullscreen.monitorSelector": "Monitors List (for above option)",
-  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors": "Monitors (only to look and copy ID from! [DO NOT MODIFY])",
+  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors": "Monitors",
+  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors.@PrefixText": "This is only to look at and copy the Monitor Name from! (DO NOT MODIFY)",
 
   "text.autoconfig.wayfix.option.Monitors": "Monitor",
-  "text.autoconfig.wayfix.option.Monitors.monitorInfo": "Monitor Info (do not modify)",
-  "text.autoconfig.wayfix.option.Monitors.monitorName": "Monitor Name (copy to clipboard)",
-  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor (do not modify)"
+  "text.autoconfig.wayfix.option.Monitors.monitorInfo": "Monitor Info",
+  "text.autoconfig.wayfix.option.Monitors.monitorName": "Monitor Name",
+  "text.autoconfig.wayfix.option.Monitors.primary.@PrefixText": "↑↑ Copy me to the \"Select Monitor\" field! (if you want to choose this monitor as the fullscreen one) ↑↑",
+  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor"
 }
