@@ -27,33 +27,42 @@ public class ModConfig implements ConfigData {
 
     public static class Fullscreen {
         @Tooltip
-        public boolean useMonitorID = false;
+        public boolean useMonitorName = false;
 
         @Tooltip
-        public long monitorID = 0;
+        public String monitorName = "";
 
         @CollapsibleObject
         public MonitorSelector monitorSelector = new MonitorSelector(new ArrayList<>());
     }
 
     public static class Monitors {
-        public String name;
-        public long id;
+        public String monitorInfo;
+        public String monitorName;
+        @Excluded public long monitorID;
         public boolean primary;
 
         public Monitors() {
-            this("Cannot find any monitors!", 0, false);
+            this("Cannot find any monitors!", 0);
         }
 
-        public Monitors(String name, long id, boolean primary) {
-            this.name = name;
-            this.id = id;
-            this.primary = primary;
-            if(id <= 0) return;
+        public Monitors(String info, long handle) {
+            this.monitorInfo = info;
+            if(handle == 0) return;
+            this.monitorName = GLFW.glfwGetMonitorName(handle);
+            this.monitorID = handle;
+            this.primary = GLFW.glfwGetPrimaryMonitor() == handle;
 
-            if(WayFix.config.fullscreen.monitorID <= 0 && primary) {
-                WayFix.config.fullscreen.monitorID = id;
+            if(WayFix.config.fullscreen.monitorName.isBlank() && this.primary) {
+                WayFix.config.fullscreen.monitorName = this.monitorName;
             }
+        }
+
+        public static long getMonitor(String name) {
+            for(Monitors monitor : WayFix.config.fullscreen.monitorSelector.monitors) {
+                if(name.equals(monitor.monitorName)) return monitor.monitorID;
+            }
+            return 0;
         }
     }
 
@@ -62,7 +71,7 @@ public class ModConfig implements ConfigData {
 
         public MonitorSelector(ArrayList<Monitor> monitors) {
             for(Monitor monitor : monitors) {
-                this.monitors.add(new Monitors(monitor.getCurrentVideoMode().toString(), monitor.getHandle(), GLFW.glfwGetPrimaryMonitor() == monitor.getHandle()));
+                this.monitors.add(new Monitors(monitor.getCurrentVideoMode().toString(), monitor.getHandle()));
             }
         }
     }

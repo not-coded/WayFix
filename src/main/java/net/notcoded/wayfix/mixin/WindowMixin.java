@@ -6,6 +6,7 @@ import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.minecraft.client.util.Window;
 import net.notcoded.wayfix.WayFix;
+import net.notcoded.wayfix.config.ModConfig;
 import net.notcoded.wayfix.util.DesktopFileInjector;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,20 +53,21 @@ public class WindowMixin {
 
     @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
     private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WayFix.config.fullscreen.useMonitorID ? getMonitor(instance) : instance.getMonitor(window);
+        return WayFix.config.fullscreen.useMonitorName ? getMonitor(instance) : instance.getMonitor(window);
     }
 
     @Unique
     private Monitor getMonitor(MonitorTracker instance) {
-        long configMonitorID = WayFix.config.fullscreen.monitorID;
-        if(configMonitorID <= 0 || instance.getMonitor(configMonitorID) == null) {
-            WayFix.LOGGER.warn("Failed to get Monitor ID from config!");
-            WayFix.LOGGER.warn("Perhaps you set it incorrectly? (current value: {})", configMonitorID);
-            configMonitorID = GLFW.glfwGetPrimaryMonitor();
-            WayFix.LOGGER.warn("Using primary monitor instead. (value: {})", configMonitorID);
+        String monitorName = WayFix.config.fullscreen.monitorName;
+        long monitorID = monitorName.isBlank() ? GLFW.glfwGetPrimaryMonitor() : ModConfig.Monitors.getMonitor(monitorName);
+
+        if(monitorID <= 0 || instance.getMonitor(monitorID) == null) {
+            WayFix.LOGGER.warn("Error occurred while trying to set monitor.");
+            WayFix.LOGGER.warn("Using primary monitor instead.");
+            monitorID = GLFW.glfwGetPrimaryMonitor();
         }
 
-        return instance.getMonitor(configMonitorID);
+        return instance.getMonitor(monitorID);
     }
     
     @Inject(method = "setIcon", at = @At("HEAD"), cancellable = true)
