@@ -59,7 +59,7 @@ public class WindowMixin {
     @Unique
     private Monitor getMonitor(MonitorTracker instance) {
         String monitorName = WayFix.config.fullscreen.monitorName;
-        long monitorID = monitorName.isBlank() ? GLFW.glfwGetPrimaryMonitor() : ModConfig.Monitors.getMonitor(monitorName);
+        long monitorID = monitorName.trim().isEmpty() ? GLFW.glfwGetPrimaryMonitor() : ModConfig.Monitors.getMonitor(monitorName);
 
         if(monitorID <= 0 || instance.getMonitor(monitorID) == null) {
             WayFix.LOGGER.warn("Error occurred while trying to set monitor.");

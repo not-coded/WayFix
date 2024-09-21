@@ -55,7 +55,7 @@ public class ModConfig implements ConfigData {
             this.monitorID = handle;
             this.primary = GLFW.glfwGetPrimaryMonitor() == handle;
 
-            if(WayFix.config.fullscreen.monitorName.isBlank() && this.primary) {
+            if(WayFix.config.fullscreen.monitorName.trim().isEmpty() && this.primary) {
                 WayFix.config.fullscreen.monitorName = this.monitorName;
             }
         }
