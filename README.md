@@ -23,7 +23,7 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
   - Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon.
 
 - Key Modifiers Fix
-  - Fixes keyboard combinations such as 'CTRL + A' or 'CTRL + C' being sent in chat as characters.
+  - Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.
 
 - **Fullscreen**
   - Specify Monitor *(looks different in-game)* ***(by default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations)***
