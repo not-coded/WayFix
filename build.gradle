@@ -109,7 +109,7 @@ if (stonecutter.current.isActive) {
 
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
-	projectId = "codelib" // change to wayfix when done testing
+	projectId = "wayfix"
 	versionNumber = project.version
 	versionName = "v" + property("mod.version") + " [" + property("mod.version_name")  + "]"
 	versionType = "release"
@@ -124,10 +124,8 @@ modrinth {
 	}
 
 
-	if(property("deps.minecraft") == "1.16.5") changelog = "# Requires Java 9+\n"
-
-	def changes = rootProject.file("CHANGES.md").text.replaceAll(" NEWLINE ", "\n") // fix newline issue
-	changelog = "" + changes + ""
+	def changes = rootProject.file("CHANGES.md").text
+	changelog = (property("deps.java") == "9" ? "# Requires Java 9+\n\n" : "") + changes + ""
 
 
 	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")

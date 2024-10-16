@@ -8,9 +8,9 @@ stonecutter.registerChiseled tasks.register("chiseledBuild", stonecutter.chisele
     ofTask "build"
 }
 
-stonecutter.registerChiseled tasks.register("chiseledPublishMods", stonecutter.chiseled) {
+stonecutter.registerChiseled tasks.register("chiseledModrinth", stonecutter.chiseled) {
     setGroup "project"
-    ofTask "publishMods"
+    ofTask "modrinth"
 }
 
 stonecutter.debug false
