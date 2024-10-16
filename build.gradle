@@ -126,10 +126,4 @@ modrinth {
 
 	def changes = rootProject.file("CHANGES.md").text
 	changelog = (property("deps.java") == "9" ? "# Requires Java 9+\n\n" : "") + changes + ""
-
-
-	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-	System.out.println("feature the version " + project.version)
-	System.out.println("also unfeature the last version whilst you're at it")
-	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 }
