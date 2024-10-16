@@ -115,9 +115,22 @@ public class DesktopFileInjector {
     }
 
     private static void updateIconSystem() {
-        ProcessBuilder builder = new ProcessBuilder("xdg-icon-resource", "forceupdate");
+        String desktop = System.getenv("XDG_CURRENT_DESKTOP");
+
+        String[] process = new String[]{"xdg-icon-resource", "forceupdate"};
+
+        if(desktop.equals("KDE")) {
+            // https://www.reddit.com/r/kde/comments/g986ql/comment/fovvkod
+            process = new String[]{"dbus-send", "--session", "/KGlobalSettings", "org.kde.KGlobalSettings.notifyChange", "int32:0", "int32:0"};
+        } else if(desktop.equals("GNOME"))  {
+            process = new String[]{"gtk-update-icon-cache"};
+        }
+
+        ProcessBuilder builder = new ProcessBuilder(process);
         try {
             builder.start();
-        } catch (IOException ignored) { }
+        } catch (IOException ignored) {
+            WayFix.LOGGER.warn("Failed to refresh the icons you might see the incorrect icons there.");
+        }
     }
 }
