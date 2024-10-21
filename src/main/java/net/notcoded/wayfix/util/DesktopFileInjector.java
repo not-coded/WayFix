@@ -119,10 +119,10 @@ public class DesktopFileInjector {
 
         String[] process = new String[]{"xdg-icon-resource", "forceupdate"};
 
-        if(desktop.equals("KDE")) {
+        if(desktop.contains("KDE")) {
             // https://www.reddit.com/r/kde/comments/g986ql/comment/fovvkod
             process = new String[]{"dbus-send", "--session", "/KGlobalSettings", "org.kde.KGlobalSettings.notifyChange", "int32:0", "int32:0"};
-        } else if(desktop.equals("GNOME"))  {
+        } else if(desktop.contains("GNOME"))  {
             process = new String[]{"gtk-update-icon-cache"};
         }
 
@@ -130,7 +130,7 @@ public class DesktopFileInjector {
         try {
             builder.start();
         } catch (IOException ignored) {
-            WayFix.LOGGER.warn("Failed to refresh the icons you might see the incorrect icons there.");
+            WayFix.LOGGER.warn("Failed to update the icon cache, you might see the incorrect icons for the game.");
         }
     }
 }
