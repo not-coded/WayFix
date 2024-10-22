@@ -39,9 +39,10 @@ public class DesktopFileInjector {
         try (InputStream stream = DesktopFileInjector.class.getResourceAsStream(RESOURCE_LOCATION)) {
             Path location = getDesktopFileLocation();
 
+            String desktop = System.getenv("XDG_CURRENT_DESKTOP");
             String version = MinecraftClient.getInstance().getGameVersion();
             injectFile(location, String.format(IOUtils.toString(Objects.requireNonNull(stream), StandardCharsets.UTF_8),
-                    version, ICON_NAME.substring(0, ICON_NAME.lastIndexOf("."))).getBytes(StandardCharsets.UTF_8));
+                    version, ICON_NAME.substring(0, ICON_NAME.lastIndexOf(".")), !desktop.contains("GNOME") ? "Hidden=true" : "").getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             WayFix.LOGGER.error("Failed to inject icon: ", e);
         }
