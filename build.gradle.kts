@@ -1,16 +1,21 @@
 plugins {
-    id("fabric-loom") version "1.8-SNAPSHOT"
+    id("dev.architectury.loom")
+    id("architectury-plugin")
     id("com.modrinth.minotaur") version "2.+"
 }
 
-val modName = property("mod.name").toString()
-version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}"
-group = property("mod.maven_group").toString()
-
+val minecraft = stonecutter.current.version
+version = "${mod.version}+${mod.version_name}-common"
+group = mod.maven_group
 
 base {
-    archivesName.set(modName)
+    archivesName.set(mod.name)
 }
+
+architectury.common(stonecutter.tree.branches.mapNotNull {
+    if (stonecutter.current.project !in it) null
+    else it.prop("loom.platform")
+})
 
 repositories {
     maven("https://maven.shedaniel.me/")
@@ -18,12 +23,12 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-    mappings("net.fabricmc:yarn:${property("deps.yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+    minecraft("com.mojang:minecraft:$minecraft")
+    mappings("net.fabricmc:yarn:${mod.dep("yarn_mappings")}:v2")
+    modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
 
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${property("deps.cloth_config_version")}")
-    modImplementation("com.terraformersmc:modmenu:${property("deps.mod_menu_version")}")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${mod.dep("cloth_config_version")}")
+    modImplementation("com.terraformersmc:modmenu:${mod.dep("mod_menu_version")}")
 
     implementation("org.lwjgl:lwjgl-glfw:3.3.2")
 }
@@ -34,44 +39,20 @@ loom {
             options.put("mark-corresponding-synthetics", "1")
         }
     }
-
-    runConfigs.all {
-        ideConfigGenerated(true)
-        vmArgs("-Dmixin.debug.export=true")
-        runDir = "../../run"
-    }
-}
-
-val target = ">=${property("mod.min_target")}- <=${property("mod.max_target")}"
-
-tasks.processResources {
-    val expandProps = mapOf(
-        "version" to project.version,
-        "minecraftVersion" to target,
-        "javaVersion" to project.property("deps.java")
-    )
-
-    filesMatching("fabric.mod.json") {
-        expand(expandProps)
-    }
-
-    inputs.properties(expandProps)
 }
 
 java {
     withSourcesJar()
 
-    val javaVersion = if (project.property("deps.java") == "9") JavaVersion.VERSION_1_9 else JavaVersion.VERSION_17
+    val javaVersion = if (mod.dep("java") == "9") JavaVersion.VERSION_1_9 else JavaVersion.VERSION_17
 
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 }
 
-tasks.register<Copy>("buildAndCollect") {
-    group = "build"
-    from(tasks.remapJar.get().archiveFile)
-    into(rootProject.layout.buildDirectory.file("libs"))
-    dependsOn("build")
+tasks.build {
+    group = "versioned"
+    description = "Must run through 'chiseledBuild'"
 }
 
 
@@ -92,5 +73,5 @@ modrinth {
     }
 
     val changes = rootProject.file("CHANGES.md").readText()
-    changelog = if (project.property("deps.java") == "9") "# Requires Java 9+\n\n$changes" else changes
+    changelog = if (mod.dep("java") == "9") "# Requires Java 9+\n\n$changes" else changes
 }

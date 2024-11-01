@@ -1,8 +1,11 @@
 pluginManagement {
     repositories {
-        maven("https://maven.fabricmc.net/")
-
+        mavenCentral()
         gradlePluginPortal()
+        maven("https://maven.fabricmc.net/")
+        maven("https://maven.architectury.dev")
+        maven("https://maven.minecraftforge.net")
+        maven("https://maven.neoforged.net/releases/")
         maven("https://maven.kikugie.dev/snapshots")
     }
 }
@@ -12,15 +15,18 @@ plugins {
 }
 
 stonecutter {
-    kotlinController = true
     centralScript = "build.gradle.kts"
+    kotlinController = true
 
-    shared {
-        versions("1.16.5", "1.19", "1.19.3", "1.20.6")
-        vcsVersion = "1.20.6"
+    create(rootProject) {
+        versions("1.16.5", "1.19", "1.19.3", "1.20.2")
+
+        branch("fabric")
+        branch("forge")
+        branch("neoforge") { versions("1.20.2") }
+
+        vcsVersion = "1.20.2"
     }
-
-    create(rootProject)
 }
 
 rootProject.name = "WayFix"

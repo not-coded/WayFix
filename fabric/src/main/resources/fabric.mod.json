@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "wayfix",
+  "version": "${version}",
+
+  "name": "WayFix",
+  "description": "Fixes multiple issues regarding Wayland compatibility for Minecraft.",
+  "authors": [
+    "NotCoded"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/wayfix",
+    "sources": "https://github.com/not-coded/WayFix",
+    "issues": "https://github.com/not-coded/WayFix/issues"
+  },
+
+  "license": "LGPL-2.1",
+  "icon": "assets/wayfix/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.notcoded.wayfix.fabric.WayFixFabric"
+    ],
+    "modmenu": [
+      "net.notcoded.wayfix.fabric.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "wayfix-common.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.20",
+    "cloth-config2": ">=4.9.0",
+    "minecraft": "${minecraftVersion}",
+    "java": ">=${javaVersion}"
+  },
+  "recommends": {
+    "modmenu": "*"
+  }
+}

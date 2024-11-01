@@ -5,7 +5,7 @@
 
 # WayFix
 
-[![Supports minecraft versions from 1.16](https://notcoded.needs.rest/r/badge_minecraft_1.16plus.svg)](https://minecraft.net) [![Cloth Config API](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/requires/cloth-config-api_vector.svg)](https://www.modrinth.com/mod/cloth-config)  ![Won't support forge](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/unsupported/forge_vector.svg)
+[![Supports minecraft versions from 1.16](https://notcoded.needs.rest/r/badge_minecraft_1.16plus.svg)](https://minecraft.net) [![Cloth Config API](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/requires/cloth-config-api_vector.svg)](https://www.modrinth.com/mod/cloth-config)
 
 Fixes multiple issues regarding Wayland compatibility for Minecraft.
 

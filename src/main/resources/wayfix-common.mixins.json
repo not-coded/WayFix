@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.notcoded.wayfix.common.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "GLXMixin",
+    "MinecraftClientMixin",
+    "MonitorTrackerMixin",
+    "TextFieldWidgetMixin",
+    "WindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
