@@ -18,6 +18,8 @@ public abstract class MinecraftClientMixin {
 
     @Shadow @Final public GameOptions options;
 
+    @Shadow public abstract boolean forcesUnicodeFont();
+
     @ModifyArg(method = "onResolutionChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setScaleFactor(D)V"))
     private double fixHiDPIScaling(double d) {
         int guiScale;
@@ -28,7 +30,7 @@ public abstract class MinecraftClientMixin {
         *///?}
 
         // "Auto" or Gui Scale 0 already auto-scales it
-        return guiScale != 0 && WayFix.config.autoScaleGUI ? d * getScaleFactor() : d;
+        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * getScaleFactor()), this.forcesUnicodeFont()) : d;
     }
 
     @Unique
