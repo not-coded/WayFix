@@ -4,17 +4,16 @@ plugins {
 }
 
 val modName = property("mod.name").toString()
-version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}"
-group = property("mod.maven_group").toString()
 
 val loader = loom.platform.get().name.lowercase()
 val isFabric = loader == "fabric"
 val isForge = loader == "forge"
-val isNeoForge = loader == "neoforge"
+
+version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}" + "-" + loader
+group = property("mod.maven_group").toString()
 
 stonecutter.const("fabric", isFabric)
 stonecutter.const("forge", isForge)
-stonecutter.const("neoforge", isNeoForge)
 
 base {
     archivesName.set(modName)
@@ -33,23 +32,14 @@ dependencies {
         mappings("net.fabricmc:yarn:${property("deps.yarn_mappings")}:v2")
     }
 
+    modImplementation("me.shedaniel.cloth:cloth-config-${loader}:${property("deps.cloth_config_version")}")
     implementation("org.lwjgl:lwjgl-glfw:3.3.2")
 
     if(isFabric) {
         modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
-
-        modImplementation("me.shedaniel.cloth:cloth-config-fabric:${property("deps.cloth_config_version")}")
         modImplementation("com.terraformersmc:modmenu:${property("deps.mod_menu_version")}")
     } else if (isForge) {
         "forge"("net.minecraftforge:forge:${property("deps.minecraft")}-${property("deps.forge_loader")}")
-        implementation("me.shedaniel.cloth:cloth-config-forge:${property("deps.cloth_config_version")}")
-
-    } else if(isNeoForge) {
-        mappings("dev.architectury:yarn-mappings-patch-neoforge:${property("deps.neoforge_patch")}")
-
-        "neoForge"("net.neoforged:neoforge:${property("deps.neoforge_loader")}")
-        implementation("me.shedaniel.cloth:cloth-config-neoforge:${property("deps.cloth_config_version")}")
-
     }
 
 }
@@ -88,13 +78,8 @@ tasks.processResources {
     }
 
     if(isForge) {
-        filesMatching("META-INF/mods.toml") { expand(expandProps) }
-        exclude("fabric.mod.json", "META-INF/neoforge.mods.toml")
-    }
-
-    if (isNeoForge) {
-        filesMatching("META-INF/neoforge.mods.toml") { expand(expandProps) }
-        exclude("fabric.mod.json", "META-INF/mods.toml")
+        filesMatching("META-INF/*mods.toml") { expand(expandProps) }
+        exclude("fabric.mod.json")
     }
 
     inputs.properties(expandProps)
@@ -125,12 +110,16 @@ modrinth {
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
     gameVersions.addAll(property("publishing.supported_versions").toString().split(","))
-    loaders.addAll("fabric", "quilt") // TODO: modify for forge and neoforge
+    if(isFabric) loaders.addAll("fabric", "quilt")
+    else if(isForge) {
+        loaders.add("forge")
+        if(property("mod.version").toString() == "1.20") loaders.add("neoforge")
+    }
     //featured = true
 
     dependencies {
         required.project("cloth-config")
-        optional.project("modmenu") // TODO: modify for forge and neoforge
+        if(isFabric) optional.project("modmenu")
     }
 
     val changes = rootProject.file("CHANGES.md").readText()

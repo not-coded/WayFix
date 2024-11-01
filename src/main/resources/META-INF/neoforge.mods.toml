@@ -13,13 +13,6 @@ logoFile = "assets/wayfix/icon.png"
 logoBlur = false
 
 [["dependencies.wayfix"]]
-modId = "neoforge"
-type = "required"
-versionRange = "[${forgeConstraint}"
-ordering = "NONE"
-side = "CLIENT"
-
-[["dependencies.wayfix"]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraftVersion}"

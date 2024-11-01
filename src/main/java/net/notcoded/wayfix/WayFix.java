@@ -7,48 +7,58 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 import net.notcoded.wayfix.config.ModConfig;
 //? if fabric {
-import net.fabricmc.api.ClientModInitializer;
-//?} elif forge {
-/*
+/*import net.fabricmc.api.ClientModInitializer;
+*///?} elif forge {
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+//? if >=1.19 {
 import net.minecraftforge.client.ConfigScreenHandler;
-*///?} elif neoforge {
-/*
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+//?} elif <1.19 {
+/*import net.minecraftforge.fml.ExtensionPoint;
 *///?}
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+//?}
 
-//? if forge || neoforge
-//@Mod(value = "wayfix"/*? if neoforge {*/, dist = Dist.CLIENT/*?}*/)
-public class WayFix /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
+//? if forge {
+@Mod(value = "wayfix")
+@OnlyIn(Dist.CLIENT)
+//?}
+public class WayFix /*? if fabric {*/ /*implements ClientModInitializer *//*?}*/ {
     public static final Logger LOGGER = LogManager.getLogger(WayFix.class);
     public static ModConfig config;
 
     //? if fabric {
-    @Override
+    /*@Override
     public void onInitializeClient() {
         registerConfig();
     }
-    //?}
+    *///?}
 
-    //? if forge || neoforge {
-    /*public WayFix() {
-        registerConfig();
-
-        //? if neoforge
-        ////ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
-        //? if forge
-		////ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-		//    new ConfigScreenHandler.ConfigScreenFactory(
-		//        (mc, screen) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
-		//    )
-		//);
+    //? if forge {
+    public WayFix() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addListener(WayFix::onClientSetup);
     }
-	*///?}
+
+	private static void onClientSetup(final FMLClientSetupEvent event) {
+		event.enqueueWork(() -> {
+            //? if >=1.19 {
+            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
+                    new ConfigScreenHandler.ConfigScreenFactory(
+                            (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                    )
+            );
+            //?} elif <1.19 {
+            /*ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
+                    (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+            );*///?}
+        });
+	}
+	//?}
 
     public static boolean isWayland() {
         try {
@@ -68,7 +78,7 @@ public class WayFix /*? if fabric {*/ implements ClientModInitializer /*?}*/ {
         }
     }
 
-    private void registerConfig() {
+    public static void registerConfig() {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }

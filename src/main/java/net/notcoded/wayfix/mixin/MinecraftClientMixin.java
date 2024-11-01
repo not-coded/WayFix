@@ -11,6 +11,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+//? if forge {
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//?}
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
@@ -38,4 +42,11 @@ public abstract class MinecraftClientMixin {
 
         return pos[0]; // using x or y doesn't matter
     }
+
+    //? if forge {
+    @Inject(method = "<clinit>", at = @At("HEAD"))
+    private static void initConfig(CallbackInfo ci) {
+        WayFix.registerConfig();
+    }
+    //?}
 }
