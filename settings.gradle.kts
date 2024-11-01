@@ -17,7 +17,7 @@ stonecutter {
 
     shared {
         versions("1.16.5", "1.19", "1.19.3", "1.20.6")
-        vcsVersion = "1.19.3"
+        vcsVersion = "1.20.6"
     }
 
     create(rootProject)
