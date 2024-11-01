@@ -17,7 +17,7 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 ## Features
 - Auto Scale GUI
-  - Auto-scales the GUI scale depending on your display's scaling. ***[may look weird when windowed]*** (e.g. 2 GUI Scale on 1920x1080 at 100% -> 4 GUI Scale on 3840x2160 at 200%)
+  - Auto-scales the GUI scale depending on your display's scaling. (e.g. 2 GUI Scale on 1920x1080 at 100% → 4 GUI Scale on 3840x2160 at 200%)
 
 - Inject Minecraft Icon at Startup
   - Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon.
@@ -26,8 +26,11 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
   - Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.
 
 - **Fullscreen**
-  - Specify Monitor *(looks different in-game)* ***(by default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations)***
-    - Specify which monitor you want to fullscreen Minecraft to. (primary monitor by default) (must turn on in seperate config option)
+  - Select Monitor
+    - Select which monitor you want to fullscreen Minecraft to. (primary monitor by default) (must turn on in seperate config option)
+
+> [!NOTE]
+> By default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations (unable to get X and Y position).
 
 ## Building
 - Clone the repository
