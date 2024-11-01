@@ -34,4 +34,7 @@ ordering = "NONE"
 side = "CLIENT"
 
 [[mixins]]
-config = "wayfix.mixins.json"
+config = "wayfix-common.mixins.json"
+
+[[mixins]]
+config = "wayfix-neoforge.mixins.json"
