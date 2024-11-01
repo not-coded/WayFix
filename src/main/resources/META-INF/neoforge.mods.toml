@@ -1,0 +1,44 @@
+modLoader = "javafml"
+loaderVersion = "*"
+issueTrackerURL = "https://github.com/not-coded/WayFix/issues"
+license = "LGPL-2.1"
+
+[[mods]]
+modId = "wayfix"
+version = "${version}"
+displayName = "WayFix"
+authors = "NotCoded"
+description = "Fixes multiple issues regarding Wayland compatibility for Minecraft."
+logoFile = "assets/wayfix/icon.png"
+logoBlur = false
+
+[["dependencies.wayfix"]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${forgeConstraint}"
+ordering = "NONE"
+side = "CLIENT"
+
+[["dependencies.wayfix"]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraftVersion}"
+ordering = "NONE"
+side = "CLIENT"
+
+[["dependencies.wayfix"]]
+modId = "java"
+type = "required"
+versionRange = "${javaVersion}"
+ordering = "NONE"
+side = "CLIENT"
+
+[["dependencies.wayfix"]]
+modId = "cloth-config"
+type = "required"
+versionRange = ">=4.9.0"
+ordering = "NONE"
+side = "CLIENT"
+
+[[mixins]]
+config = "wayfix.mixins.json"
