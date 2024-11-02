@@ -64,6 +64,11 @@ loom {
         }
     }
 
+    forge.mixinConfigs(
+        "wayfix-forge.mixins.json",
+        "wayfix-common.mixins.json"
+    )
+
     runConfigs.all {
         isIdeConfigGenerated = true
         runDir = "../../../run"
@@ -90,7 +95,7 @@ tasks.processResources {
 tasks.shadowJar {
     configurations = listOf(shadowBundle)
     archiveClassifier = "dev-shadow"
-    exclude("fabric.mod.json")
+    exclude("fabric.mod.json", "assets/wayfix/icon.png")
 }
 
 tasks.remapJar {

@@ -14,10 +14,12 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
+    // broken in forge
     @Shadow @Final private Window window;
 
     @Shadow @Final public GameOptions options;
 
+    // broken in forge
     @Shadow public abstract boolean forcesUnicodeFont();
 
     @ModifyArg(method = "onResolutionChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setScaleFactor(D)V"))
@@ -29,14 +31,19 @@ public abstract class MinecraftClientMixin {
         /*guiScale = this.options.guiScale;
         *///?}
 
+
         // "Auto" or Gui Scale 0 already auto-scales it
-        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * getScaleFactor()), this.forcesUnicodeFont()) : d;
+
+        // this.forcesUnicodeFont() doesn't work on forge & neoforge
+        // TODO: this.options.getForceUnicodeFont().getValue();
+
+        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * wayFix$getScaleFactor()), this.forcesUnicodeFont()) : d;
     }
 
     @Unique
-    private float getScaleFactor() {
+    private float wayFix$getScaleFactor() {
         float[] pos = new float[1];
-        GLFW.glfwGetWindowContentScale(this.window.getHandle(), pos, pos);
+         GLFW.glfwGetWindowContentScale(this.window.getHandle(), pos, pos);
 
         return pos[0]; // using x or y doesn't matter
     }

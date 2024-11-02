@@ -1,7 +1,5 @@
 package net.notcoded.wayfix.common.mixin;
 
-import net.minecraft.client.WindowEventHandler;
-import net.minecraft.client.WindowSettings;
 import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.minecraft.client.util.Window;
@@ -41,7 +39,7 @@ import net.minecraft.resource.InputSupplier;
 @Mixin(Window.class)
 public class WindowMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
-    private void onWindowHints(WindowEventHandler windowEventHandler, MonitorTracker monitorTracker, WindowSettings windowSettings, String string, String string2, CallbackInfo ci) {
+    private void onWindowHints(CallbackInfo ci) {
         if (isWayland()) {
             GLFW.glfwWindowHint(GLFW.GLFW_FOCUS_ON_SHOW, GLFW.GLFW_FALSE);
 

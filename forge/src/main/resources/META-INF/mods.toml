@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "WayFix"
 authors = "NotCoded"
 description = "Fixes multiple issues regarding Wayland compatibility for Minecraft."
-logoFile = "assets/wayfix/icon.png"
+logoFile = "icon.png"
 logoBlur = false
 
 [["dependencies.wayfix"]]
