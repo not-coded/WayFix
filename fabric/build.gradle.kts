@@ -13,7 +13,6 @@ val common: Project = requireNotNull(stonecutter.node.sibling("")) {
 }
 
 version = "${common.mod.version}+${common.mod.version_name}-${loader}"
-group = "${common.mod.maven_group}.$loader"
 
 base {
     archivesName.set(common.mod.name)

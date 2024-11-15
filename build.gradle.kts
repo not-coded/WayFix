@@ -6,7 +6,6 @@ plugins {
 
 val minecraft = stonecutter.current.version
 version = "${mod.version}+${mod.version_name}-common"
-group = mod.maven_group
 
 base {
     archivesName.set(mod.name)
