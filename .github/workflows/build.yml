@@ -10,12 +10,16 @@ jobs:
   build:
     strategy:
       matrix:
-        # Use these Java versions
         java: [
           21,
         ]
-        # and run on both Linux and Windows
+
+        distribution: [
+          "temurin",
+        ]
+
         os: [ubuntu-20.04, windows-2022]
+
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout repository
@@ -26,6 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distribution }}
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
