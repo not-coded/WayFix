@@ -51,6 +51,10 @@ loom {
         }
     }
 
+    if(isForge) {
+        forge.mixinConfig("wayfix.mixins.json")
+    }
+
     /*
     runConfigs.all {
         ideConfigGenerated(stonecutter.current.isActive)
@@ -74,12 +78,12 @@ tasks.processResources {
 
     if (isFabric) {
         filesMatching("fabric.mod.json") { expand(expandProps) }
-        exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta")
+        exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "icon.png")
     }
 
     if(isForge) {
         filesMatching("META-INF/*mods.toml") { expand(expandProps) }
-        exclude("fabric.mod.json")
+        exclude("fabric.mod.json", "assets/wayfix/icon.png")
     }
 
     inputs.properties(expandProps)

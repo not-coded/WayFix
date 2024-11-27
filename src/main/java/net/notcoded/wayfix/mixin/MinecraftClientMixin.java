@@ -34,11 +34,11 @@ public abstract class MinecraftClientMixin {
         *///?}
 
         // "Auto" or Gui Scale 0 already auto-scales it
-        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * getScaleFactor()), this.forcesUnicodeFont()) : d;
+        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * wayFix$getScaleFactor()), this.forcesUnicodeFont()) : d;
     }
 
     @Unique
-    private float getScaleFactor() {
+    private float wayFix$getScaleFactor() {
         float[] pos = new float[1];
         GLFW.glfwGetWindowContentScale(this.window.getHandle(), pos, pos);
 

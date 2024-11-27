@@ -1,7 +1,5 @@
 package net.notcoded.wayfix.mixin;
 
-import net.minecraft.client.WindowEventHandler;
-import net.minecraft.client.WindowSettings;
 import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.minecraft.client.util.Window;
@@ -41,7 +39,7 @@ import net.minecraft.resource.InputSupplier;
 @Mixin(Window.class)
 public class WindowMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
-    private void onWindowHints(WindowEventHandler windowEventHandler, MonitorTracker monitorTracker, WindowSettings windowSettings, String string, String string2, CallbackInfo ci) {
+    private void onWindowHints(CallbackInfo ci) {
         if (isWayland()) {
             GLFW.glfwWindowHint(GLFW.GLFW_FOCUS_ON_SHOW, GLFW.GLFW_FALSE);
 
@@ -53,11 +51,11 @@ public class WindowMixin {
 
     @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
     private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WayFix.config.fullscreen.useMonitorName ? getMonitor(instance) : instance.getMonitor(window);
+        return WayFix.config.fullscreen.useMonitorName ? wayFix$getMonitor(instance) : instance.getMonitor(window);
     }
 
     @Unique
-    private Monitor getMonitor(MonitorTracker instance) {
+    private Monitor wayFix$getMonitor(MonitorTracker instance) {
         String monitorName = WayFix.config.fullscreen.monitorName;
         long monitorID = monitorName.trim().isEmpty() ? GLFW.glfwGetPrimaryMonitor() : ModConfig.Monitors.getMonitor(monitorName);
 

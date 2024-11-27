@@ -11,8 +11,7 @@ import net.notcoded.wayfix.config.ModConfig;
 *///?} elif forge {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 //? if >=1.19 {
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -40,24 +39,21 @@ public class WayFix /*? if fabric {*/ /*implements ClientModInitializer *//*?}*/
 
     //? if forge {
     public WayFix() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(WayFix::onClientSetup);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> WayFix::setupConfigScreen);
     }
 
-	private static void onClientSetup(final FMLClientSetupEvent event) {
-		event.enqueueWork(() -> {
-            //? if >=1.19 {
-            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-                    new ConfigScreenHandler.ConfigScreenFactory(
-                            (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
-                    )
-            );
-            //?} elif <1.19 {
-            /*ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
-                    (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
-            );*///?}
-        });
-	}
+    private static void setupConfigScreen() {
+        //? if >=1.19 {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
+                new ConfigScreenHandler.ConfigScreenFactory(
+                        (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                )
+        );
+        //?} elif <1.19 {
+        /*ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
+                (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+        );*///?}
+    }
 	//?}
 
     public static boolean isWayland() {

@@ -21,11 +21,11 @@ public class MonitorTrackerMixin {
 
     @Inject(method = {"handleMonitorEvent", "<init>"}, at = @At("TAIL"))
     private void handleConfigAdditions(CallbackInfo ci) {
-        this.refreshMonitors();
+        this.wayFix$refreshMonitors();
     }
 
     @Unique
-    private void refreshMonitors() {
+    private void wayFix$refreshMonitors() {
         ArrayList<Monitor> monitors = new ArrayList<>();
         this.pointerToMonitorMap.forEach((aLong, monitor1) -> monitors.add(monitor1));
 
