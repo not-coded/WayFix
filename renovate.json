@@ -4,5 +4,6 @@
     "config:recommended"
   ],
   "dependencyDashboard": false,
+  "platformAutomerge": true,
   "ignoreDeps": ["dev.kikugie.stonecutter"]
 }
