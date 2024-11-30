@@ -3,4 +3,6 @@
   "extends": [
     "config:recommended"
   ]
+  "dependencyDashboard": false,
+  "ignoreDeps": ["dev.kikugie.stonecutter"]
 }
