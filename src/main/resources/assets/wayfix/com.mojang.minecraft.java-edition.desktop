@@ -2,8 +2,7 @@
 Name=Minecraft %s
 Comment=Explore your own unique world, survive the night, and create anything you can imagine!
 Icon=%s
-Exec=true
-Terminal=false
 Type=Application
+NoDisplay=true
 Categories=Game;
 %s
