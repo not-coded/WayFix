@@ -73,8 +73,13 @@ public class DesktopFileInjector {
 
         try {
             // https://stackoverflow.com/questions/58534138/does-files-readallbytes-closes-the-inputstream-after-reading-the-file
+            //? if >=1.19 {
             icon16Byte = icon16.readAllBytes();
             icon32Byte = icon32.readAllBytes();
+            //?} elif <1.19 {
+            /^icon16Byte = IOUtils.toByteArray(icon16);
+            icon32Byte = IOUtils.toByteArray(icon32);
+            ^///?}
         } catch (IOException e) {
             e.printStackTrace();
             return;

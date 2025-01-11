@@ -61,7 +61,7 @@ tasks.processResources {
 java {
     withSourcesJar()
 
-    val javaVersion = if (project.property("deps.java") == "9") JavaVersion.VERSION_1_9 else JavaVersion.VERSION_17
+    val javaVersion = if (project.property("deps.java") == "8") JavaVersion.VERSION_1_8 else JavaVersion.VERSION_17
 
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
@@ -91,6 +91,5 @@ modrinth {
         optional.project("modmenu")
     }
 
-    val changes = rootProject.file("CHANGES.md").readText()
-    changelog = if (project.property("deps.java") == "9") "# Requires Java 9+\n\n$changes" else changes
+    changelog = rootProject.file("CHANGES.md").readText()
 }

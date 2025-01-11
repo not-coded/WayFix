@@ -2,6 +2,9 @@ package net.notcoded.wayfix.util;
 
 import net.minecraft.client.MinecraftClient;
 import net.notcoded.wayfix.WayFix;
+//? if <1.19 {
+/*import org.apache.commons.io.IOUtils;
+*///?}
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -33,7 +36,11 @@ public class WindowHelper {
 
         try {
             Process process = builder.start();
+            //? if >=1.19 {
             String result = new String(process.getInputStream().readAllBytes());
+            //?} elif <1.19 {
+            /*String result = new String(IOUtils.toByteArray(process.getInputStream()));
+            *///?}
             Pattern pattern = Pattern.compile("Position:\\s*(\\d+),(\\d+)");
             Matcher matcher = pattern.matcher(result);
             if (matcher.find()) {
@@ -54,7 +61,11 @@ public class WindowHelper {
 
         try {
             Process process = builder.start();
+            //? if >=1.19 {
             String result = new String(process.getInputStream().readAllBytes());
+            //?} elif <1.19 {
+            /*String result = new String(IOUtils.toByteArray(process.getInputStream()));
+            *///?}
             Pattern pattern = Pattern.compile("Window \\{(\\w+-\\w+-\\w+-\\w+-\\w+)}");
             Matcher matcher = pattern.matcher(result);
             if (matcher.find()) {
