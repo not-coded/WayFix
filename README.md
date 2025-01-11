@@ -14,6 +14,8 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 **Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).**
 <br>
 **With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).**
+<br>
+**And [kdotool](https://github.com/jinliu/kdotool)** ***(only if on KDE Plasma)***.
 
 </div>
 
@@ -33,6 +35,7 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 > [!NOTE]
 > By default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations (unable to get X and Y position).
+> This is automatically **fixed only on KDE Plasma** without specifying the monitor by installing **[kdotool](https://github.com/jinliu/kdotool)**.
 
 ## Building
 - Clone the repository

@@ -5,6 +5,7 @@ import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.notcoded.wayfix.WayFix;
 import net.notcoded.wayfix.config.ModConfig;
+import net.notcoded.wayfix.util.WindowHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,7 +22,7 @@ public class MonitorTrackerMixin {
 
     @Inject(method = {"handleMonitorEvent", "<init>"}, at = @At("TAIL"))
     private void handleConfigAdditions(CallbackInfo ci) {
-        this.refreshMonitors();
+        if(!WindowHelper.canUseWindowHelper) this.refreshMonitors();
     }
 
     @Unique

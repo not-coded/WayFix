@@ -1,4 +1,3 @@
 changes:
-- fix auto gui scaling looking broken with weird window sizes
-- make the .desktop file not show up in the applications menu (specifically on GNOME)
-  - [Pull Request by Eggmanplant](https://github.com/not-coded/WayFix/pull/18)
+- if you're on kde plasma, minecraft will fullscreen correctly without using the fullscreen config options (basically like x11)
+  - only if **[kdotool](https://github.com/jinliu/kdotool)** is installed!!!!!
