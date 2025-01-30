@@ -1,54 +1,46 @@
+import java.net.URI
+import java.nio.charset.StandardCharsets
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.StandardOpenOption
+import kotlin.io.path.readText
+
 plugins {
     id("fabric-loom") version "1.9.2"
     id("com.modrinth.minotaur") version "2.+"
 }
 
-val modName = property("mod.name").toString()
-version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}"
-group = property("mod.maven_group").toString()
+version = property("mod_version")!!
+group = property("maven_group")!!
 
 
 base {
-    archivesName.set(modName)
+    archivesName.set(property("archives_base_name").toString())
 }
 
 repositories {
+    flatDir { dirs("libraries") }
+
     maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases/")
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-    mappings("net.fabricmc:yarn:${property("deps.yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
+    minecraft("com.mojang:minecraft:${property("minecraft_version")}")
+    mappings("net.fabricmc:yarn:${property("yarn_mappings")}:v2")
+    modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
 
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${property("deps.cloth_config_version")}")
-    modImplementation("com.terraformersmc:modmenu:${property("deps.mod_menu_version")}")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${property("cloth_config_version")}")
+    modImplementation("com.terraformersmc:modmenu:${property("mod_menu_version")}")
+
+    modImplementation("net.notcoded:codelib:${property("codelib_version")}")
 
     implementation("org.lwjgl:lwjgl-glfw:3.3.2")
 }
 
-loom {
-    decompilers {
-        get("vineflower").apply { // Adds names to lambdas - useful for mixins
-            options.put("mark-corresponding-synthetics", "1")
-        }
-    }
-
-    runConfigs.all {
-        ideConfigGenerated(true)
-        vmArgs("-Dmixin.debug.export=true")
-        runDir = "../../run"
-    }
-}
-
-val target = ">=${property("mod.min_target")}- <=${property("mod.max_target")}"
-
 tasks.processResources {
     val expandProps = mapOf(
         "version" to project.version,
-        "minecraftVersion" to target,
-        "javaVersion" to project.property("deps.java")
     )
 
     filesMatching("fabric.mod.json") {
@@ -58,21 +50,90 @@ tasks.processResources {
     inputs.properties(expandProps)
 }
 
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.release.set(8)
+}
+
 java {
     withSourcesJar()
 
-    val javaVersion = if (project.property("deps.java") == "8") JavaVersion.VERSION_1_8 else JavaVersion.VERSION_17
-
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.register<Copy>("buildAndCollect") {
-    group = "build"
-    from(tasks.remapJar.get().archiveFile)
-    into(rootProject.layout.buildDirectory.file("libs"))
-    dependsOn("build")
-}
+project.gradle.addBuildListener(object : BuildListener {
+    override fun settingsEvaluated(settings: Settings) { }
+
+    override fun projectsLoaded(gradle: Gradle) { }
+
+    override fun projectsEvaluated(gradle: Gradle) { }
+
+    override fun buildFinished(result: BuildResult) {
+        if (result.failure != null) return
+        println("Fixing RefMaps")
+
+        var jarFile = file(layout.buildDirectory.file("libs/wayfix-${project.version}.jar"))
+
+        val env: MutableMap<String?, String?> = HashMap<String?, String?>()
+        env.put("create", "true")
+
+        val path: java.nio.file.Path = jarFile.toPath()
+        val uri: URI? = URI.create("jar:" + path.toUri())
+
+        FileSystems.newFileSystem(uri, env).use { fs ->
+            val refMap: java.nio.file.Path? = fs.getPath("wayfix-refmap.json")
+            if(refMap == null) return
+            var refMapText = refMap.readText()
+
+            // Fix refmap for the mixin WindowMixin1165to1192:
+            // Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V
+
+            refMapText = refMapText.replace(
+                "    \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                        "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
+                        "    },",
+                "    \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                        "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V\"\n" +
+                        "    },"
+            )
+
+            refMapText = refMapText.replace(
+                "      \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                        "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
+                        "      },",
+                "      \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                        "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V\"\n" +
+                        "      },"
+            )
+
+            // Fix refmap for the mixin WindowMixin1193to1194:
+            // Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_7367;Lnet/minecraft/class_7367;)V
+
+            refMapText = refMapText.replace(
+                "    \"net/notcoded/wayfix/mixin/WindowMixin1193to1194\": {\n" +
+                        "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
+                        "    },",
+                "    \"net/notcoded/wayfix/mixin/WindowMixin1193to1194\": {\n" +
+                        "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_7367;Lnet/minecraft/class_7367;)V\"\n" +
+                        "    },"
+            )
+
+            refMapText = refMapText.replace(
+                "      \"net/notcoded/wayfix/mixin/WindowMixin1193to1194\": {\n" +
+                        "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
+                        "      },",
+                "      \"net/notcoded/wayfix/mixin/WindowMixin1193to1194\": {\n" +
+                        "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_7367;Lnet/minecraft/class_7367;)V\"\n" +
+                        "      },"
+            )
+
+            Files.newBufferedWriter(refMap, StandardCharsets.UTF_8, StandardOpenOption.WRITE).use { writer ->
+                writer.write(refMapText)
+            }
+        }
+    }
+})
 
 
 modrinth {

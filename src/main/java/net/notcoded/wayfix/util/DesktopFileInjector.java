@@ -1,14 +1,11 @@
 package net.notcoded.wayfix.util;
 
 import net.minecraft.client.MinecraftClient;
-//? if >=1.19.3 {
 import net.minecraft.resource.InputSupplier;
-import java.util.List;
-//?} elif <1.19.3 {
-/*import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.ByteArrayInputStream;
-*///?}
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import net.notcoded.wayfix.WayFix;
 import org.apache.commons.io.IOUtils;
 import javax.imageio.ImageIO;
@@ -49,7 +46,7 @@ public class DesktopFileInjector {
 
     }
 
-    //? if >=1.19.3 {
+    // >=1.19.3
     public static void setIcon(List<InputSupplier<InputStream>> icons) {
         if(!WayFix.config.injectIcon) return;
         for (InputSupplier<InputStream> supplier : icons) {
@@ -64,22 +61,17 @@ public class DesktopFileInjector {
         }
         updateIconSystem();
     }
-    //?} elif <1.19.3 {
-    
-    /*public static void setIcon(InputStream icon16, InputStream icon32) {
+
+    // <1.19.3
+    public static void setIcon(InputStream icon16, InputStream icon32) {
         if(!WayFix.config.injectIcon) return;
         byte[] icon16Byte;
         byte[] icon32Byte;
 
         try {
             // https://stackoverflow.com/questions/58534138/does-files-readallbytes-closes-the-inputstream-after-reading-the-file
-            //? if >=1.19 {
-            icon16Byte = icon16.readAllBytes();
-            icon32Byte = icon32.readAllBytes();
-            //?} elif <1.19 {
-            /^icon16Byte = IOUtils.toByteArray(icon16);
+            icon16Byte = IOUtils.toByteArray(icon16);
             icon32Byte = IOUtils.toByteArray(icon32);
-            ^///?}
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -99,7 +91,6 @@ public class DesktopFileInjector {
 
         updateIconSystem();
     }
-    *///?}
 
     private static void injectFile(Path target, byte[] data) {
         try {

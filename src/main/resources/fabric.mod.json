@@ -33,8 +33,9 @@
   "depends": {
     "fabricloader": ">=0.14.20",
     "cloth-config2": ">=4.9.0",
-    "minecraft": "${minecraftVersion}",
-    "java": ">=${javaVersion}"
+    "minecraft": ">=1.16",
+    "codelib": ">=2.0.0",
+    "java": ">=8"
   },
   "recommends": {
     "modmenu": "*"

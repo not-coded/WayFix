@@ -8,9 +8,13 @@
     "MinecraftClientMixin",
     "MonitorTrackerMixin",
     "TextFieldWidgetMixin",
-    "WindowMixin"
+    "WindowMixin",
+    "WindowMixin1165to1192",
+    "WindowMixin1193to1194",
+    "WindowMixin120"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "net.notcoded.codelib.common.mixinhelper.MixinPlugin"
 }
