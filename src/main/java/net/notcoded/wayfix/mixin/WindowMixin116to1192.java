@@ -12,9 +12,9 @@ import java.io.InputStream;
 
 import static net.notcoded.wayfix.WayFix.isWayland;
 
-@MinecraftVersion(minecraft = {">=1.16.5", "<=1.19.2"})
+@MinecraftVersion(minecraft = {">=1.16", "<=1.19.2"})
 @Mixin(Window.class)
-public class WindowMixin1165to1192 {
+public class WindowMixin116to1192 {
 
     // Ignore error
     @Inject(method = "setIcon", at = @At("HEAD"), cancellable = true)

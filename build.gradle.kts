@@ -86,23 +86,23 @@ project.gradle.addBuildListener(object : BuildListener {
             if(refMap == null) return
             var refMapText = refMap.readText()
 
-            // Fix refmap for the mixin WindowMixin1165to1192:
+            // Fix refmap for the mixin WindowMixin116to1192:
             // Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V
 
             refMapText = refMapText.replace(
-                "    \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                "    \"net/notcoded/wayfix/mixin/WindowMixin116to1192\": {\n" +
                         "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
                         "    },",
-                "    \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                "    \"net/notcoded/wayfix/mixin/WindowMixin116to1192\": {\n" +
                         "      \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V\"\n" +
                         "    },"
             )
 
             refMapText = refMapText.replace(
-                "      \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                "      \"net/notcoded/wayfix/mixin/WindowMixin116to1192\": {\n" +
                         "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_3262;Lnet/minecraft/class_8518;)V\"\n" +
                         "      },",
-                "      \"net/notcoded/wayfix/mixin/WindowMixin1165to1192\": {\n" +
+                "      \"net/notcoded/wayfix/mixin/WindowMixin116to1192\": {\n" +
                         "        \"setIcon\": \"Lnet/minecraft/class_1041;method_4491(Lnet/minecraft/class_1041;method_4491(Ljava/io/InputStream;Ljava/io/InputStream;)V\"\n" +
                         "      },"
             )
