@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static java.lang.Character.toLowerCase;
+
 /*
 - Credits to wired-tomato
 - https://github.com/wired-tomato/WayGL
@@ -18,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class TextFieldWidgetMixin {
     @Inject(method = "charTyped", at = @At("HEAD"), cancellable = true)
     private void charTyped(char chr, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (WayFix.config.keyModifiersFix && WayFix.isWayland() && isSpecialChar(chr) && Screen.hasControlDown()) cir.setReturnValue(false);
+        if (WayFix.config.keyModifiersFix && WayFix.isWayland() && isSpecialChar(toLowerCase(chr)) && Screen.hasControlDown()) cir.setReturnValue(false);
     }
 
     @Unique
