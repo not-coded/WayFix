@@ -1,36 +1,30 @@
 pluginManagement {
     repositories {
+        mavenCentral()
+        gradlePluginPortal()
         maven("https://maven.fabricmc.net/")
         maven("https://maven.architectury.dev")
-        maven("https://maven.neoforged.net/releases/")
         maven("https://maven.minecraftforge.net")
-
-        gradlePluginPortal()
+        maven("https://maven.neoforged.net/releases/")
         maven("https://maven.kikugie.dev/snapshots")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.5-beta.3"
+    id("dev.kikugie.stonecutter") version "0.5"
 }
 
 stonecutter {
-    kotlinController= true
     centralScript = "build.gradle.kts"
-
+    kotlinController = true
     shared {
-        fun mc(mcVersion: String, loaders: Iterable<String>) {
-            for (loader in loaders) {
-                vers("$mcVersion-$loader", mcVersion)
-            }
+        fun mc(loader: String, vararg versions: String) {
+            for (version in versions) vers("$version-$loader", version)
         }
-
-        mc("1.16.5", listOf("fabric", "forge"))
-        mc("1.19", listOf("fabric", "forge"))
-        mc("1.19.3", listOf("fabric", "forge"))
-        mc("1.20.6", listOf("fabric", "forge"))
-
-        vcsVersion = ("1.20.6-fabric")
+        mc("fabric", "1.16.5", "1.19", "1.19.3", "1.20.6")
+        mc("forge", "1.16.5", "1.19", "1.19.3", "1.20.1", "1.20.6")
+        //WARNING: neoforge uses mods.toml instead of neoforge.mods.toml for versions 1.20.4 (?) and earlier
+        mc("neoforge", "1.20.4", "1.20.6")
     }
     create(rootProject)
 }

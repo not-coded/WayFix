@@ -1,54 +1,45 @@
 package net.notcoded.wayfix.mixin;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.util.Window;
 import net.notcoded.wayfix.WayFix;
 import org.lwjgl.glfw.GLFW;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-//? if forge {
+
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+
+//? if forge || neoforge {
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //?}
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-    @Shadow @Final private Window window;
-
-    @Shadow @Final public GameOptions options;
-
-    @Shadow public abstract boolean forcesUnicodeFont();
-
-    @ModifyArg(method = "onResolutionChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;setScaleFactor(D)V"))
-    private double fixHiDPIScaling(double d) {
-        int guiScale;
-        //? if >=1.19 {
-        guiScale = this.options.getGuiScale().getValue();
-        //?} elif <1.19 {
-        /*guiScale = this.options.guiScale;
-        *///?}
-
+    @Redirect(method = "onResolutionChanged", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;calculateScaleFactor(IZ)I"))
+    private int fixHiDPIScaling(Window instance, int guiScale, boolean forceUnicodeFont) {
         // "Auto" or Gui Scale 0 already auto-scales it
-        return guiScale != 0 && WayFix.config.autoScaleGUI ? window.calculateScaleFactor(Math.round(guiScale * wayFix$getScaleFactor()), this.forcesUnicodeFont()) : d;
+        if (guiScale != 0 && WayFix.config.autoScaleGUI) {
+            guiScale = Math.round(guiScale * wayfix$getScaleFactor(instance));
+        }
+
+        return instance.calculateScaleFactor(guiScale, forceUnicodeFont);
     }
 
     @Unique
-    private float wayFix$getScaleFactor() {
+    private float wayfix$getScaleFactor(Window instance) {
         float[] pos = new float[1];
-        GLFW.glfwGetWindowContentScale(this.window.getHandle(), pos, pos);
+        GLFW.glfwGetWindowContentScale(instance.getHandle(), pos, pos);
 
         return pos[0]; // using x or y doesn't matter
     }
 
-    //? if forge {
+    //? if forge || neoforge {
     @Inject(method = "<clinit>", at = @At("HEAD"))
-    private static void initConfig(CallbackInfo ci) {
-        WayFix.registerConfig();
+    private static void initMod(CallbackInfo ci) {
+        WayFix.init();
     }
     //?}
 }

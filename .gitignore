@@ -91,3 +91,8 @@ bin/
 # fabric
 
 run/
+
+# architectury
+
+.architectury-transformer\debug.log
+.architectury-transformer/debug.log

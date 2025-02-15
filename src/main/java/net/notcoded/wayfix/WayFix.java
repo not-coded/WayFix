@@ -2,59 +2,28 @@ package net.notcoded.wayfix;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.notcoded.wayfix.util.WindowHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 import net.notcoded.wayfix.config.ModConfig;
-//? if fabric {
-/*import net.fabricmc.api.ClientModInitializer;
-*///?} elif forge {
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-//? if >=1.19 {
-import net.minecraftforge.client.ConfigScreenHandler;
-//?} elif <1.19 {
-/*import net.minecraftforge.fml.ExtensionPoint;
-*///?}
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-//?}
 
-//? if forge {
-@Mod(value = "wayfix")
-@OnlyIn(Dist.CLIENT)
-//?}
-public class WayFix /*? if fabric {*/ /*implements ClientModInitializer *//*?}*/ {
+public class WayFix {
     public static final Logger LOGGER = LogManager.getLogger(WayFix.class);
     public static ModConfig config;
 
-    //? if fabric {
-    /*@Override
-    public void onInitializeClient() {
-        registerConfig();
-    }
-    *///?}
+    public static void init() {
+        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-    //? if forge {
-    public WayFix() {
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> WayFix::setupConfigScreen);
+        WindowHelper.checkIfCanUseWindowHelper();
+        if(WindowHelper.canUseWindowHelper) {
+            WayFix.config.fullscreen.monitorName = "";
+            WayFix.config.fullscreen.useMonitorName = false;
+            WayFix.config.fullscreen.monitorSelector.monitors.clear();
+            WayFix.config.fullscreen.monitorSelector.monitors.add(new ModConfig.Monitors("You do not need to use this as it is automatically fixed.", 0)); // most users probably won't understand this, but I'll include it anyway
+        }
     }
-
-    private static void setupConfigScreen() {
-        //? if >=1.19 {
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-                new ConfigScreenHandler.ConfigScreenFactory(
-                        (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
-                )
-        );
-        //?} elif <1.19 {
-        /*ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
-                (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
-        );*///?}
-    }
-	//?}
 
     public static boolean isWayland() {
         try {
@@ -72,10 +41,5 @@ public class WayFix /*? if fabric {*/ /*implements ClientModInitializer *//*?}*/
             LOGGER.warn("Please update to a LWJGL version such as '3.3.1' or higher.");
             return false;
         }
-    }
-
-    public static void registerConfig() {
-        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
-        WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
 }

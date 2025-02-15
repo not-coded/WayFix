@@ -5,6 +5,7 @@ import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.notcoded.wayfix.WayFix;
 import net.notcoded.wayfix.config.ModConfig;
+import net.notcoded.wayfix.util.WindowHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,17 +20,16 @@ import java.util.ArrayList;
 public class MonitorTrackerMixin {
     @Shadow @Final private Long2ObjectMap<Monitor> pointerToMonitorMap;
 
-    @Inject(method = {"handleMonitorEvent", "<init>"}, at = @At("TAIL"))
+    @Inject(method = {"handleMonitorEvent", "<init>"}, at = @At("RETURN"))
     private void handleConfigAdditions(CallbackInfo ci) {
-        this.wayFix$refreshMonitors();
+        if(!WindowHelper.canUseWindowHelper) this.wayfix$refreshMonitors();
     }
 
     @Unique
-    private void wayFix$refreshMonitors() {
+    private void wayfix$refreshMonitors() {
         ArrayList<Monitor> monitors = new ArrayList<>();
         this.pointerToMonitorMap.forEach((aLong, monitor1) -> monitors.add(monitor1));
 
         WayFix.config.fullscreen.monitorSelector = new ModConfig.MonitorSelector(monitors);
-
     }
 }

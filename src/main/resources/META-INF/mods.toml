@@ -15,6 +15,7 @@ logoBlur = false
 [["dependencies.wayfix"]]
 modId = "minecraft"
 type = "required"
+mandatory = true
 versionRange = "${minecraftVersion}"
 ordering = "NONE"
 side = "CLIENT"
@@ -22,15 +23,17 @@ side = "CLIENT"
 [["dependencies.wayfix"]]
 modId = "java"
 type = "required"
-versionRange = "${javaVersion}"
+mandatory = true
+versionRange = "[${javaVersion},)"
 ordering = "NONE"
 side = "CLIENT"
 
 [["dependencies.wayfix"]]
 modId = "cloth-config"
 type = "required"
-versionRange = ">=4.9.0"
-ordering = "NONE"
+mandatory = true
+versionRange = "[4.9.0,)"
+ordering = "AFTER"
 side = "CLIENT"
 
 [[mixins]]

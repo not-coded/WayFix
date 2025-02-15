@@ -15,15 +15,15 @@
   },
 
   "license": "LGPL-2.1",
-  "icon": "assets/wayfix/icon.png",
+  "icon": "icon.png",
 
   "environment": "client",
   "entrypoints": {
     "client": [
-      "net.notcoded.wayfix.WayFix"
+      "net.notcoded.wayfix.platforms.fabric.WayFixFabric"
     ],
     "modmenu": [
-      "net.notcoded.wayfix.config.ModMenuIntegration"
+      "net.notcoded.wayfix.platforms.fabric.ModMenuIntegration"
     ]
   },
   "mixins": [

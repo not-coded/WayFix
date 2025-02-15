@@ -1,47 +1,63 @@
 plugins {
-    id("dev.architectury.loom") version "1.7.+"
-    id("com.modrinth.minotaur") version "2.+"
+    id("dev.architectury.loom")
+    id("architectury-plugin")
+    id("com.modrinth.minotaur")
+    id("com.github.johnrengelman.shadow")
 }
 
-val modName = property("mod.name").toString()
-
+val minecraft = stonecutter.current.version
 val loader = loom.platform.get().name.lowercase()
+
+version = "${mod.version}+${mod.prop("version_name")}"
+group = mod.group
+base {
+    archivesName.set("${mod.id}-$loader")
+}
+
 val isFabric = loader == "fabric"
 val isForge = loader == "forge"
-
-version = "${property("mod.version")}" + "+" + "${property("mod.version_name")}" + "-" + loader
-group = property("mod.maven_group").toString()
+val isNeoForge = loader == "neoforge"
 
 stonecutter.const("fabric", isFabric)
 stonecutter.const("forge", isForge)
+stonecutter.const("neoforge", isNeoForge)
 
-base {
-    archivesName.set(modName)
-}
-
+architectury.common(stonecutter.tree.branches.mapNotNull {
+    if (stonecutter.current.project !in it) null
+    else it.prop("loom.platform")
+})
 repositories {
     maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases/")
     maven("https://maven.neoforged.net/releases")
     maven("https://maven.minecraftforge.net")
 }
-
 dependencies {
-    minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
+    minecraft("com.mojang:minecraft:$minecraft")
+
     if(isFabric || isForge) {
-        mappings("net.fabricmc:yarn:${property("deps.yarn_mappings")}:v2")
+        mappings("net.fabricmc:yarn:$minecraft+build.${mod.dep("yarn_build")}:v2")
     }
 
-    modImplementation("me.shedaniel.cloth:cloth-config-${loader}:${property("deps.cloth_config_version")}")
+    modImplementation("me.shedaniel.cloth:cloth-config-${loader}:${mod.dep("cloth_config_version")}")
     implementation("org.lwjgl:lwjgl-glfw:3.3.2")
 
-    if(isFabric) {
-        modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric_loader")}")
-        modImplementation("com.terraformersmc:modmenu:${property("deps.mod_menu_version")}")
-    } else if (isForge) {
-        "forge"("net.minecraftforge:forge:${property("deps.minecraft")}-${property("deps.forge_loader")}")
+    if (isFabric) {
+        modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
+        modImplementation("com.terraformersmc:modmenu:${mod.dep("mod_menu_version")}")
     }
-
+    if (isForge) {
+        "forge"("net.minecraftforge:forge:${minecraft}-${mod.dep("forge_loader")}")
+    }
+    if (isNeoForge) {
+        "neoForge"("net.neoforged:neoforge:${mod.dep("neoforge_loader")}")
+        mappings(loom.layered {
+            mappings("net.fabricmc:yarn:$minecraft+build.${mod.dep("yarn_build")}:v2")
+            mod.dep("neoforge_patch").takeUnless { it.startsWith('[') }?.let {
+                mappings("dev.architectury:yarn-mappings-patch-neoforge:$it")
+            }
+        })
+    }
 }
 
 loom {
@@ -50,62 +66,84 @@ loom {
             options.put("mark-corresponding-synthetics", "1")
         }
     }
-
-    if(isForge) {
+    if (isForge) {
         forge.mixinConfig("wayfix.mixins.json")
     }
-
-    /*
-    runConfigs.all {
-        ideConfigGenerated(stonecutter.current.isActive)
-        vmArgs("-Dmixin.debug.export=true")
-        runDir = "../../run"
-    }
-
-    runConfigs.remove(runConfigs["server"])
-
-     */
-}
-
-val target = ">=${property("mod.min_target")}- <=${property("mod.max_target")}"
-
-tasks.processResources {
-    val expandProps = mapOf(
-        "version" to project.version,
-        "minecraftVersion" to target,
-        "javaVersion" to project.property("deps.java")
-    )
-
-    if (isFabric) {
-        filesMatching("fabric.mod.json") { expand(expandProps) }
-        exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "icon.png")
-    }
-
-    if(isForge) {
-        filesMatching("META-INF/*mods.toml") { expand(expandProps) }
-        exclude("fabric.mod.json", "assets/wayfix/icon.png")
-    }
-
-    inputs.properties(expandProps)
 }
 
 java {
     withSourcesJar()
-
-    val javaVersion = if (project.property("deps.java") == "9") JavaVersion.VERSION_1_9 else JavaVersion.VERSION_17
-
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    val javaVersion = mod.dep("java")
+    val java = if (javaVersion == "8") JavaVersion.VERSION_1_8 else if(javaVersion == "17") JavaVersion.VERSION_17 else JavaVersion.VERSION_21
+    targetCompatibility = java
+    sourceCompatibility = java
 }
 
-tasks.register<Copy>("buildAndCollect") {
-    group = "build"
-    from(tasks.remapJar.get().archiveFile)
-    into(rootProject.layout.buildDirectory.file("libs"))
+val shadowBundle: Configuration by configurations.creating {
+    isCanBeConsumed = false
+    isCanBeResolved = true
+}
+
+tasks.shadowJar {
+    configurations = listOf(shadowBundle)
+    archiveClassifier = "dev-shadow"
+}
+
+tasks.remapJar {
+    injectAccessWidener = true
+    input = tasks.shadowJar.get().archiveFile
+    archiveClassifier = null
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.jar {
+    archiveClassifier = "dev"
+}
+
+val buildAndCollect = tasks.register<Copy>("buildAndCollect") {
+    group = "versioned"
+    description = "Must run through 'chiseledBuild'"
+    from(tasks.remapJar.get().archiveFile, tasks.remapSourcesJar.get().archiveFile)
+    into(rootProject.layout.buildDirectory.file("libs/${mod.version}/$loader"))
     dependsOn("build")
 }
 
+if (stonecutter.current.isActive) {
+    rootProject.tasks.register("buildActive") {
+        group = "project"
+        dependsOn(buildAndCollect)
+    }
 
+    rootProject.tasks.register("runActive") {
+        group = "project"
+        dependsOn(tasks.named("runClient"))
+    }
+}
+
+tasks.processResources {
+
+    properties(
+        listOf("fabric.mod.json"),
+        "version" to version,
+        "minecraftVersion" to mod.prop("mc_dep_fabric"),
+        "javaVersion" to mod.dep("java")
+    )
+
+    properties(
+        listOf("META-INF/*mods.toml"),
+        "version" to version,
+        "minecraftVersion" to mod.prop("mc_dep_forgelike"),
+        "javaVersion" to mod.dep("java")
+    )
+}
+
+tasks.build {
+    group = "versioned"
+    description = "Must run through 'chiseledBuild'"
+}
+
+// TODO: Fix
+/*
 modrinth {
     token.set(System.getenv("MODRINTH_TOKEN"))
     projectId.set("wayfix")
@@ -113,12 +151,11 @@ modrinth {
     versionName.set("v$version")
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
-    gameVersions.addAll(property("publishing.supported_versions").toString().split(","))
-    if(isFabric) loaders.addAll("fabric", "quilt")
-    else if(isForge) {
-        loaders.add("forge")
-        if(property("mod.version").toString() == "1.20") loaders.add("neoforge")
-    }
+    gameVersions.addAll(mod.mc_targets).toString().split(","))
+
+    loaders.add(loader)
+    if(loader == "fabric") loaders.add("quilt")
+
     //featured = true
 
     dependencies {
@@ -129,3 +166,5 @@ modrinth {
     val changes = rootProject.file("CHANGES.md").readText()
     changelog = if (project.property("deps.java") == "9") "# Requires Java 9+\n\n$changes" else changes
 }
+
+ */

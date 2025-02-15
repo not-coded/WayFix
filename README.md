@@ -5,13 +5,15 @@
 
 # WayFix
 
-[![Supports minecraft versions from 1.16](https://notcoded.needs.rest/r/badge_minecraft_1.16plus.svg)](https://minecraft.net) [![Cloth Config API](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/requires/cloth-config-api_vector.svg)](https://www.modrinth.com/mod/cloth-config)  ![Won't support forge](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/unsupported/forge_vector.svg)
+[![Supports minecraft versions from 1.16](https://notcoded.needs.rest/r/badge_minecraft_1.16plus.svg)](https://minecraft.net) [![Cloth Config API](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/requires/cloth-config-api_vector.svg)](https://www.modrinth.com/mod/cloth-config)
 
 Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 **Recommended to be used with [glfw-wayland](https://github.com/BoyOrigin/glfw-wayland).**
 <br>
 **With the [Cursor Fix](https://www.reddit.com/r/kde/comments/13ddktm/mouse_cursor_changing_when_over_some_apps_when/).**
+<br>
+**And [kdotool](https://github.com/jinliu/kdotool)** ***(only if on KDE Plasma)***.
 
 </div>
 
@@ -31,6 +33,7 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 
 > [!NOTE]
 > By default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations (unable to get X and Y position).
+> This is automatically **fixed only on KDE Plasma** without specifying the monitor by installing **[kdotool](https://github.com/jinliu/kdotool)**.
 
 ## Building
 - Clone the repository

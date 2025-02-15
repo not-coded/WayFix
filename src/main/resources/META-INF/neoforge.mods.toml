@@ -22,15 +22,15 @@ side = "CLIENT"
 [["dependencies.wayfix"]]
 modId = "java"
 type = "required"
-versionRange = "${javaVersion}"
+versionRange = "[${javaVersion},)"
 ordering = "NONE"
 side = "CLIENT"
 
 [["dependencies.wayfix"]]
 modId = "cloth-config"
 type = "required"
-versionRange = ">=4.9.0"
-ordering = "NONE"
+versionRange = "[4.9.0,)"
+ordering = "AFTER"
 side = "CLIENT"
 
 [[mixins]]
