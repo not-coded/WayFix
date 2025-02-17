@@ -27,5 +27,8 @@
   "text.autoconfig.wayfix.option.Monitors.monitorInfo": "Monitor Info",
   "text.autoconfig.wayfix.option.Monitors.monitorName": "Monitor Name",
   "text.autoconfig.wayfix.option.Monitors.primary.@PrefixText": "↑↑ Copy me to the \"Select Monitor\" field! (if you want to choose this monitor as the fullscreen one) ↑↑",
-  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor"
+  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor",
+
+  "wayfix.toast.restart-game.title": "WayFix: Restart your game!",
+  "wayfix.toast.restart-game.description": "The early loading screen has been disabled."
 }

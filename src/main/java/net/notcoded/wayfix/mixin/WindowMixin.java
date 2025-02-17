@@ -1,7 +1,5 @@
 package net.notcoded.wayfix.mixin;
 
-import net.minecraft.client.WindowEventHandler;
-import net.minecraft.client.WindowSettings;
 import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.minecraft.client.util.Window;

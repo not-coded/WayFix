@@ -37,9 +37,9 @@ public class WindowHelper {
 
         try {
             Process process = builder.start();
-            //? if >=1.19 {
+            //? if >=1.18.2 {
             String result = new String(process.getInputStream().readAllBytes());
-            //?} elif <1.19 {
+            //?} elif <1.18.2 {
             /*String result = new String(IOUtils.toByteArray(process.getInputStream()));
             *///?}
             Pattern pattern = Pattern.compile("Position:\\s*(\\d+),(\\d+)");
@@ -62,9 +62,9 @@ public class WindowHelper {
 
         try {
             Process process = builder.start();
-            //? if >=1.19 {
+            //? if >=1.18.2 {
             String result = new String(process.getInputStream().readAllBytes());
-            //?} elif <1.19 {
+            //?} elif <1.18.2 {
             /*String result = new String(IOUtils.toByteArray(process.getInputStream()));
             *///?}
             Pattern pattern = Pattern.compile("Window \\{(\\w+-\\w+-\\w+-\\w+-\\w+)}");

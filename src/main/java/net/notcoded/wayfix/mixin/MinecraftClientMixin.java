@@ -2,6 +2,7 @@ package net.notcoded.wayfix.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
+
 import net.notcoded.wayfix.WayFix;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,10 +11,31 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-
 //? if forge || neoforge {
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//?}
+
+//? if forge {
+/*import net.notcoded.wayfix.platforms.forge.WayFixForge;
+
+//? if >1.16.5 <1.20.1 {
+/^import com.mojang.blaze3d.systems.RenderSystem;
+import static net.notcoded.wayfix.WayFix.supportsWayland;
+^///?}
+
+//? if >1.16.5 <1.19.3 {
+/^import java.util.function.LongSupplier;
+^///?}
+
+//? if 1.19.3 {
+/^import net.minecraft.util.TimeSupplier;
+^///?}
+
+*///?}
+
+//? if neoforge {
+import net.notcoded.wayfix.platforms.neoforge.WayFixNeoForge;
 //?}
 
 @Mixin(MinecraftClient.class)
@@ -28,6 +50,25 @@ public abstract class MinecraftClientMixin {
         return instance.calculateScaleFactor(guiScale, forceUnicodeFont);
     }
 
+    //? if forge {
+
+    /*//? if >1.16.5 <1.20.1 {
+    /^//? if >1.16.5 <1.19.3 {
+    /^¹@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;initBackendSystem()Ljava/util/function/LongSupplier;"))
+    private LongSupplier preGLFWInit(){
+    ¹^///?} elif 1.19.3 {
+    /^¹@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;initBackendSystem()Lnet/minecraft/util/TimeSupplier$Nanoseconds;"))
+    private TimeSupplier.Nanoseconds preGLFWInit(){
+    ¹^///?}
+        if (supportsWayland()) {
+            GLFW.glfwInitHint(GLFW.GLFW_PLATFORM, GLFW.GLFW_PLATFORM_WAYLAND); // enable wayland backend if supported
+        }
+        return RenderSystem.initBackendSystem();
+    }
+    ^///?}
+
+    *///?}
+
     @Unique
     private float wayfix$getScaleFactor(Window instance) {
         float[] pos = new float[1];
@@ -40,6 +81,17 @@ public abstract class MinecraftClientMixin {
     @Inject(method = "<clinit>", at = @At("HEAD"))
     private static void initMod(CallbackInfo ci) {
         WayFix.init();
+    }
+
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void checkEarlyWindow(CallbackInfo ci) {
+        //? if neoforge {
+        WayFixNeoForge.checkEarlyWindow();
+        //?}
+
+        //? if forge {
+        /*WayFixForge.checkEarlyWindow();
+        *///?}
     }
     //?}
 }
