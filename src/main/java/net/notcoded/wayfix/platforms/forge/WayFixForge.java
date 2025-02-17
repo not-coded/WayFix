@@ -53,8 +53,6 @@ public class WayFixForge {
 
     public static void checkEarlyWindow() {
 
-        // TODO: <1.20.1 doesn't work, find a way to use "-Dfml.earlyprogresswindow=false"
-
         //? if >=1.20.1 {
         /^if(!FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL)) return;
         FMLConfig.updateConfig(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL, false);

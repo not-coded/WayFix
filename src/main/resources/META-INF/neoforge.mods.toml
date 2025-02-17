@@ -1,6 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "*"
 issueTrackerURL = "https://github.com/not-coded/WayFix/issues"
+displayURL = "https://modrinth.com/mod/wayfix"
 license = "LGPL-2.1"
 
 [[mods]]
@@ -12,21 +13,14 @@ description = "Fixes multiple issues regarding Wayland compatibility for Minecra
 logoFile = "icon.png"
 logoBlur = false
 
-[["dependencies.wayfix"]]
+[[dependencies.wayfix]]
 modId = "minecraft"
 type = "required"
 versionRange = "${minecraftVersion}"
 ordering = "NONE"
 side = "CLIENT"
 
-[["dependencies.wayfix"]]
-modId = "java"
-type = "required"
-versionRange = "[${javaVersion},)"
-ordering = "NONE"
-side = "CLIENT"
-
-[["dependencies.wayfix"]]
+[[dependencies.wayfix]]
 modId = "cloth-config"
 type = "required"
 versionRange = "[4.9.0,)"

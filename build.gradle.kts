@@ -8,10 +8,10 @@ plugins {
 val minecraft = stonecutter.current.version
 val loader = loom.platform.get().name.lowercase()
 
-version = "${mod.version}+${mod.prop("version_name")}"
+version = "${mod.version}+${mod.prop("version_name")}-$loader"
 group = mod.group
 base {
-    archivesName.set("${mod.id}-$loader")
+    archivesName.set(mod.id)
 }
 
 val isFabric = loader == "fabric"
@@ -31,6 +31,9 @@ repositories {
     maven("https://maven.terraformersmc.com/releases/")
     maven("https://maven.neoforged.net/releases")
     maven("https://maven.minecraftforge.net")
+
+    flatDir { dirs(rootProject.files("libs")) }
+
 }
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
@@ -48,6 +51,10 @@ dependencies {
     }
     if (isForge) {
         "forge"("net.minecraftforge:forge:${minecraft}-${mod.dep("forge_loader")}")
+
+        if(minecraft == "1.16.5") {
+            include("me.byquanton:noearlyloadingprogress:1.0.1")
+        }
     }
     if (isNeoForge) {
         "neoForge"("net.neoforged:neoforge:${mod.dep("neoforge_loader")}")
@@ -142,29 +149,24 @@ tasks.build {
     description = "Must run through 'chiseledBuild'"
 }
 
-// TODO: Fix
-/*
 modrinth {
     token.set(System.getenv("MODRINTH_TOKEN"))
     projectId.set("wayfix")
+
     versionNumber.set(version.toString())
-    versionName.set("v$version")
+    versionName.set("v${mod.version}+${mod.prop("version_name")} | ${loader.upperCaseFirst()}")
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
-    gameVersions.addAll(mod.mc_targets).toString().split(","))
+    gameVersions.addAll(mod.prop("mc_targets").toString().split(","))
+    //featured = true
 
     loaders.add(loader)
-    if(loader == "fabric") loaders.add("quilt")
-
-    //featured = true
+    if(isFabric) loaders.add("quilt")
 
     dependencies {
         required.project("cloth-config")
         if(isFabric) optional.project("modmenu")
     }
 
-    val changes = rootProject.file("CHANGES.md").readText()
-    changelog = if (project.property("deps.java") == "9") "# Requires Java 9+\n\n$changes" else changes
+    changelog = rootProject.file("CHANGES.md").readText()
 }
-
- */
