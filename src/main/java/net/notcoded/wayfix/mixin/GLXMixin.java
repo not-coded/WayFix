@@ -2,7 +2,7 @@ package net.notcoded.wayfix.mixin;
 
 import com.mojang.blaze3d.platform.GLX;
 import org.spongepowered.asm.mixin.Mixin;
-//? if !fabric && (1.16.5 || >=1.20.1) {
+//? if (forge || neoforge) && (1.16.5 || >=1.20.1) {
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ import static net.notcoded.wayfix.WayFix.supportsWayland;
 
 @Mixin(GLX.class)
 public abstract class GLXMixin {
-    //? if !fabric && (1.16.5 || >=1.20.1) {
+    //? if (forge || neoforge) && (1.16.5 || >=1.20.1) {
 
     @Inject(method = "_initGlfw", at = @At("HEAD"), remap = false)
     private static void preGLFWInit(CallbackInfoReturnable<LongSupplier> cir) {
