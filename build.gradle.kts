@@ -32,8 +32,6 @@ repositories {
     maven("https://maven.neoforged.net/releases")
     maven("https://maven.minecraftforge.net")
 
-    flatDir { dirs(rootProject.files("libs")) }
-
 }
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
@@ -51,10 +49,6 @@ dependencies {
     }
     if (isForge) {
         "forge"("net.minecraftforge:forge:${minecraft}-${mod.dep("forge_loader")}")
-
-        if(minecraft == "1.16.5") {
-            include("me.byquanton:noearlyloadingprogress:1.0.1")
-        }
     }
     if (isNeoForge) {
         "neoForge"("net.neoforged:neoforge:${mod.dep("neoforge_loader")}")
@@ -169,4 +163,5 @@ modrinth {
     }
 
     changelog = rootProject.file("CHANGES.md").readText()
+    if(minecraft == "1.16.5" && isForge) changelog = changelog.get() + "\nNOTE: You must disable the early loading screen manually, this can be done by adding \"-Dfml.earlyprogresswindow=false\" to your java arguments or by installing the [No Early loading progress](https://www.curseforge.com/minecraft/mc-mods/no-early-loading-progress) mod."
 }
