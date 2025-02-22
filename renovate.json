@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "dependencyDashboard": false,
+  "platformAutomerge": true,
+  "ignoreDeps": ["dev.kikugie.stonecutter"]
+}
