@@ -5,5 +5,8 @@
   ],
   "dependencyDashboard": false,
   "platformAutomerge": true,
-  "ignoreDeps": ["dev.kikugie.stonecutter"]
+  "ignoreDeps": [
+    "dev.kikugie.stonecutter",
+    "org.lwjgl"
+  ]
 }
