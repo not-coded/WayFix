@@ -46,13 +46,13 @@ public abstract class WindowMixin {
     @Shadow @Final private long handle;
 
     // forge only allows injecting into constructors on return, this is a jank fix, but it works
-    //? if forge {
+    //? if forge || (neoforge && 1.20.4) {
     /*@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", remap = false))
     *///?} else {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
     private void onWindowHints(CallbackInfo ci) {
     //?}
-    //? if forge {
+    //? if forge || (neoforge && 1.20.4) {
     /*private void onWindowHints() {
         GLFW.glfwDefaultWindowHints();
     *///?}

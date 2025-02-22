@@ -21,7 +21,7 @@ ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.wayfix]]
-modId = "cloth-config"
+modId = "cloth_config"
 type = "required"
 versionRange = "[4.9.0,)"
 ordering = "AFTER"
