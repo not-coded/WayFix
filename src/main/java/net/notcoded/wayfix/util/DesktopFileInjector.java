@@ -135,6 +135,11 @@ public class DesktopFileInjector {
         ProcessBuilder builder = new ProcessBuilder(process);
         try {
             builder.start();
+
+            if(desktop.contains("KDE")) {
+                new ProcessBuilder("dbus-send", "--session", "/KIconLoader", "org.kde.KIconLoader.iconChanged", "int32:0", "int32:0").start();
+            }
+
         } catch (IOException ignored) {
             WayFix.LOGGER.warn("Failed to update the icon cache, you might see the incorrect icons for the game.");
         }
