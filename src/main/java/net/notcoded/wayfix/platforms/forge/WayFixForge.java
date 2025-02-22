@@ -54,13 +54,18 @@ public class WayFixForge {
     public static void checkEarlyWindow() {
 
         //? if >=1.20.1 {
-        if(!FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL)) return;
-        FMLConfig.updateConfig(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL, false);
+        try {
+            if(!FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL)) return;
+            FMLConfig.updateConfig(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL, false);
 
-        MinecraftClient.getInstance().getToastManager().add(new SystemToast(SystemToast.Type.WORLD_BACKUP,
-                Text.translatable("wayfix.toast.restart-game.title"),
-                Text.translatable("wayfix.toast.restart-game.description"))
-        );
+            MinecraftClient.getInstance().getToastManager().add(new SystemToast(SystemToast.Type.WORLD_BACKUP,
+                    Text.translatable("wayfix.toast.restart-game.title"),
+                    Text.translatable("wayfix.toast.restart-game.description"))
+            );
+        } catch(NoClassDefFoundError ignored) {
+            // womp womp, on 1.20 (or older forge version)
+        }
+
         //?}
     }
 }
