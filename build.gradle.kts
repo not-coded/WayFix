@@ -122,20 +122,24 @@ if (stonecutter.current.isActive) {
 }
 
 tasks.processResources {
-
-    properties(
-        listOf("fabric.mod.json"),
+    val expandProps = mapOf(
         "version" to version,
-        "minecraftVersion" to mod.prop("mc_dep_fabric"),
+        "minecraftVersion" to mod.prop("mc_dep"),
         "javaVersion" to mod.dep("java")
     )
 
-    properties(
-        listOf("META-INF/*mods.toml"),
-        "version" to version,
-        "minecraftVersion" to mod.prop("mc_dep_forgelike"),
-        "javaVersion" to mod.dep("java")
-    )
+    if (isFabric) {
+        filesMatching("fabric.mod.json") { expand(expandProps) }
+        exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta")
+    }
+
+    if(isForge) {
+        filesMatching("META-INF/*mods.toml") { expand(expandProps) }
+        exclude("fabric.mod.json")
+    }
+
+    inputs.properties(expandProps)
+
 }
 
 tasks.build {
