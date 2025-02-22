@@ -41,7 +41,7 @@ dependencies {
     }
 
     modImplementation("me.shedaniel.cloth:cloth-config-${loader}:${mod.dep("cloth_config_version")}")
-    implementation("org.lwjgl:lwjgl-glfw:3.3.2")
+    implementation("org.lwjgl:lwjgl-glfw:3.3.6")
 
     if (isFabric) {
         modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
