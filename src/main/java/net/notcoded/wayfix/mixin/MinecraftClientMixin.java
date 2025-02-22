@@ -24,11 +24,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static net.notcoded.wayfix.WayFix.supportsWayland;
 ^///?}
 
-//? if >1.16.5 <1.19.3 {
+//? if >1.16.5 <1.19.2 {
 /^import java.util.function.LongSupplier;
 ^///?}
 
-//? if 1.19.3 {
+//? if 1.19.2 || 1.19.3 {
 /^import net.minecraft.util.TimeSupplier;
 ^///?}
 
@@ -53,10 +53,10 @@ public abstract class MinecraftClientMixin {
     //? if forge {
 
     /*//? if >1.16.5 <1.20.1 {
-    /^//? if >1.16.5 <1.19.3 {
+    /^//? if >1.16.5 <1.19.2 {
     /^¹@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;initBackendSystem()Ljava/util/function/LongSupplier;"))
     private LongSupplier preGLFWInit(){
-    ¹^///?} elif 1.19.3 {
+    ¹^///?} elif 1.19.2 || 1.19.3 {
     /^¹@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;initBackendSystem()Lnet/minecraft/util/TimeSupplier$Nanoseconds;"))
     private TimeSupplier.Nanoseconds preGLFWInit(){
     ¹^///?}
