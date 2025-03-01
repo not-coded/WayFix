@@ -1,13 +1,12 @@
 //? if forge {
 /*package net.notcoded.wayfix.platforms.forge;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.notcoded.wayfix.config.ModConfig;
+import net.notcoded.wayfix.config.ModClothConfig;
 
 //? if >=1.20.1 {
 import net.minecraft.text.Text;
@@ -36,16 +35,16 @@ public class WayFixForge {
         //? if >=1.19 {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
                 new ConfigScreenHandler.ConfigScreenFactory(
-                        (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                        (client, parent) -> ModClothConfig.buildScreen(parent)
                 )
         );
         //?} elif >1.16.5 <1.19 {
         /^ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, () ->
-                new ConfigGuiHandler.ConfigGuiFactory((client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                new ConfigGuiHandler.ConfigGuiFactory((client, parent) -> ModClothConfig.buildScreen(parent)
         ));
         ^///?} elif 1.16.5 {
         /^ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
-                (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                (client, parent) -> ModClothConfig.buildScreen(parent)
         );
         ^///?}
     }

@@ -23,7 +23,7 @@ side = "CLIENT"
 [[dependencies.wayfix]]
 modId = "cloth_config"
 type = "required"
-versionRange = "[4.9.0,)"
+versionRange = "[4.17.101,)"
 ordering = "AFTER"
 side = "CLIENT"
 

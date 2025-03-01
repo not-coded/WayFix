@@ -4,6 +4,7 @@ import net.minecraft.client.util.Monitor;
 import net.minecraft.client.util.MonitorTracker;
 import net.minecraft.client.util.Window;
 import net.notcoded.wayfix.WayFix;
+import net.notcoded.wayfix.config.ModClothConfig;
 import net.notcoded.wayfix.config.ModConfig;
 import net.notcoded.wayfix.util.DesktopFileInjector;
 import net.notcoded.wayfix.util.WindowHelper;
@@ -47,15 +48,15 @@ public abstract class WindowMixin {
 
     // forge only allows injecting into constructors on return, this is a jank fix, but it works
     //? if forge || (neoforge && 1.20.4) {
-    /*@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", remap = false))
-    *///?} else {
-    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
+    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", remap = false))
+    //?} else {
+    /*@Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", shift = At.Shift.AFTER, remap = false))
     private void onWindowHints(CallbackInfo ci) {
-    //?}
-    //? if forge || (neoforge && 1.20.4) {
-    /*private void onWindowHints() {
-        GLFW.glfwDefaultWindowHints();
     *///?}
+    //? if forge || (neoforge && 1.20.4) {
+    private void onWindowHints() {
+        GLFW.glfwDefaultWindowHints();
+    //?}
         if (isWayland()) {
             GLFW.glfwWindowHint(GLFW.GLFW_FOCUS_ON_SHOW, GLFW.GLFW_FALSE);
 
@@ -66,13 +67,13 @@ public abstract class WindowMixin {
 
     @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
     private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WayFix.config.fullscreen.useMonitorName && !WindowHelper.canUseWindowHelper ? wayfix$getMonitor(instance) : instance.getMonitor(window);
+        return WayFix.config.monitorName.trim().isEmpty() && !WindowHelper.canUseWindowHelper ? wayfix$getMonitor(instance) : instance.getMonitor(window);
     }
 
     @Unique
     private Monitor wayfix$getMonitor(MonitorTracker instance) {
-        String monitorName = WayFix.config.fullscreen.monitorName;
-        long monitorID = monitorName.trim().isEmpty() ? GLFW.glfwGetPrimaryMonitor() : ModConfig.Monitors.getMonitor(monitorName);
+        String monitorName = WayFix.config.monitorName;
+        long monitorID = monitorName.trim().isEmpty() ? GLFW.glfwGetPrimaryMonitor() : ModClothConfig.monitors.get(monitorName);
 
         if(monitorID <= 0 || instance.getMonitor(monitorID) == null) {
             WayFix.LOGGER.warn("Error occurred while trying to set monitor.");

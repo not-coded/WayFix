@@ -2,27 +2,22 @@ package net.notcoded.wayfix;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.notcoded.wayfix.config.ModClothConfig;
+import net.notcoded.wayfix.config.ModConfig;
 import net.notcoded.wayfix.util.WindowHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
-import net.notcoded.wayfix.config.ModConfig;
 
 public class WayFix {
     public static final Logger LOGGER = LogManager.getLogger(WayFix.class);
     public static ModConfig config;
 
     public static void init() {
-        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
-        WayFix.config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        AutoConfig.register(ModClothConfig.class, GsonConfigSerializer::new);
+        WayFix.config = AutoConfig.getConfigHolder(ModClothConfig.class).getConfig();
 
         WindowHelper.checkIfCanUseWindowHelper();
-        if(WindowHelper.canUseWindowHelper) {
-            WayFix.config.fullscreen.monitorName = "";
-            WayFix.config.fullscreen.useMonitorName = false;
-            WayFix.config.fullscreen.monitorSelector.monitors.clear();
-            WayFix.config.fullscreen.monitorSelector.monitors.add(new ModConfig.Monitors("You do not need to use this as it is automatically fixed.", 0)); // most users probably won't understand this, but I'll include it anyway
-        }
     }
 
     public static boolean isWayland() {

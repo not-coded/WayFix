@@ -1,33 +1,20 @@
 {
-  "text.autoconfig.wayfix.title": "WayFix Options",
+  "wayfix.option.title": "WayFix Options",
 
-  "text.autoconfig.wayfix.option.autoScaleGUI": "Auto Scale GUI",
-  "text.autoconfig.wayfix.option.autoScaleGUI.@Tooltip": "Auto-scales the GUI scale depending on your display's scaling. (e.g. 2 GUI Scale on 1920x1080 at 100% -> 4 GUI Scale on 3840x2160 at 200%)",
+  "wayfix.option.autoScaleGUI": "Auto Scale GUI",
+  "wayfix.option.autoScaleGUI.tooltip": "Auto-scales the GUI scale depending on your display's scaling.",
+  "wayfix.option.autoScaleGUI.tooltip2": "(e.g. 2 GUI Scale on 1920x1080 at 100% → 4 GUI Scale on 3840x2160 at 200%)",
 
-  "text.autoconfig.wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
-  "text.autoconfig.wayfix.option.injectIcon.@Tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon (requires restart).",
+  "wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
+  "wayfix.option.injectIcon.tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon (requires restart).",
 
-  "text.autoconfig.wayfix.option.keyModifiersFix": "Key Modifiers Fix",
-  "text.autoconfig.wayfix.option.keyModifiersFix.@Tooltip": "Fixes keyboard combinations such as 'CTRL + A' or 'CTRL + C' being sent in chat.",
+  "wayfix.option.keyModifiersFix": "Key Modifiers Fix",
+  "wayfix.option.keyModifiersFix.tooltip": "Fixes keyboard combinations such as 'CTRL + A' or 'CTRL + C' being sent in chat.",
 
-  "text.autoconfig.wayfix.option.fullscreen": "Fullscreen",
-  "text.autoconfig.wayfix.option.fullscreen.@Tooltip": "Options related to full-screening the game (Wayland breaks the default Minecraft Fullscreen functionality a little bit)",
-
-  "text.autoconfig.wayfix.option.fullscreen.useMonitorName": "Use Monitor Name",
-  "text.autoconfig.wayfix.option.fullscreen.useMonitorName.@Tooltip": "Full-screens the window in the selected monitor (view list below!!!!).",
-
-  "text.autoconfig.wayfix.option.fullscreen.monitorName": "Select Monitor",
-  "text.autoconfig.wayfix.option.fullscreen.monitorName.@Tooltip": "Full-screens the window in the selected monitor (view list below!!!!). (by default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations)",
-
-  "text.autoconfig.wayfix.option.fullscreen.monitorSelector": "Monitors List (for above option)",
-  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors": "Monitors",
-  "text.autoconfig.wayfix.option.fullscreen.monitorSelector.monitors.@PrefixText": "This is only to look at and copy the Monitor Name from! (DO NOT MODIFY)",
-
-  "text.autoconfig.wayfix.option.Monitors": "Monitor",
-  "text.autoconfig.wayfix.option.Monitors.monitorInfo": "Monitor Info",
-  "text.autoconfig.wayfix.option.Monitors.monitorName": "Monitor Name",
-  "text.autoconfig.wayfix.option.Monitors.primary.@PrefixText": "↑↑ Copy me to the \"Select Monitor\" field! (if you want to choose this monitor as the fullscreen one) ↑↑",
-  "text.autoconfig.wayfix.option.Monitors.primary": "Is Primary Monitor",
+  "wayfix.option.monitorName": "Select Monitor",
+  "wayfix.option.monitorName.tooltip": "Full-screens the window in the selected monitor.",
+  "wayfix.option.monitorName.tooltip2": "Leave empty to disable.",
+  "wayfix.option.monitorName.tooltip3": "By default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations.",
 
   "wayfix.toast.restart-game.title": "WayFix: Restart your game!",
   "wayfix.toast.restart-game.description": "The early loading screen has been disabled."

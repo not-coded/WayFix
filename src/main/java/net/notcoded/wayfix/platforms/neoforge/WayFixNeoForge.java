@@ -1,17 +1,15 @@
 //? if neoforge {
 package net.notcoded.wayfix.platforms.neoforge;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 import net.neoforged.fml.loading.FMLConfig;
-import net.notcoded.wayfix.config.ModConfig;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
+import net.notcoded.wayfix.config.ModClothConfig;
 //? if <1.20.6 {
 import net.neoforged.neoforge.client.ConfigScreenHandler;
-
 //?} else {
 /*import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 *///?}
@@ -22,11 +20,11 @@ public class WayFixNeoForge {
                 //? if <1.20.6 {
                 ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory(
-                        ((client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get())
+                        ((client, parent) -> ModClothConfig.buildScreen(parent))
                 )
                 //?} else {
                 /*IConfigScreenFactory.class,
-                () -> (client, parent) -> AutoConfig.getConfigScreen(ModConfig.class, parent).get()
+                () -> (client, parent) -> ModClothConfig.buildScreen(parent)
                 *///?}
         );
 	}
