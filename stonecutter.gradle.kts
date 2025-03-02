@@ -5,7 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("com.modrinth.minotaur") version "2.+" apply false
 }
-stonecutter active "1.20.4-neoforge" /* [SC] DO NOT EDIT */
+stonecutter active "1.20.6-fabric" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
 
 // Builds every version into `build/libs/{mod.version}/{loader}`

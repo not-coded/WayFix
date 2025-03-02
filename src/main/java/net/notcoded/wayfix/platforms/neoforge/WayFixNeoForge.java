@@ -1,5 +1,5 @@
 //? if neoforge {
-package net.notcoded.wayfix.platforms.neoforge;
+/*package net.notcoded.wayfix.platforms.neoforge;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
@@ -9,23 +9,23 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.notcoded.wayfix.config.ModClothConfig;
 //? if <1.20.6 {
-import net.neoforged.neoforge.client.ConfigScreenHandler;
-//?} else {
-/*import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-*///?}
+/^import net.neoforged.neoforge.client.ConfigScreenHandler;
+^///?} else {
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+//?}
 @Mod("wayfix")
 public class WayFixNeoForge {
 	public WayFixNeoForge() {
         ModLoadingContext.get().registerExtensionPoint(
                 //? if <1.20.6 {
-                ConfigScreenHandler.ConfigScreenFactory.class,
+                /^ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory(
                         ((client, parent) -> ModClothConfig.buildScreen(parent))
                 )
-                //?} else {
-                /*IConfigScreenFactory.class,
+                ^///?} else {
+                IConfigScreenFactory.class,
                 () -> (client, parent) -> ModClothConfig.buildScreen(parent)
-                *///?}
+                //?}
         );
 	}
 
@@ -39,4 +39,4 @@ public class WayFixNeoForge {
         );
     }
 }
-//?}
+*///?}

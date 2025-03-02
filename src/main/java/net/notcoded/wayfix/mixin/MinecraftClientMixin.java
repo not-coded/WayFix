@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 //? if forge || neoforge {
-import org.spongepowered.asm.mixin.injection.Inject;
+/*import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-//?}
+*///?}
 
 //? if forge {
 /*import net.notcoded.wayfix.platforms.forge.WayFixForge;
@@ -35,8 +35,8 @@ import static net.notcoded.wayfix.WayFix.supportsWayland;
 *///?}
 
 //? if neoforge {
-import net.notcoded.wayfix.platforms.neoforge.WayFixNeoForge;
-//?}
+/*import net.notcoded.wayfix.platforms.neoforge.WayFixNeoForge;
+*///?}
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
@@ -78,7 +78,7 @@ public abstract class MinecraftClientMixin {
     }
 
     //? if forge || neoforge {
-    @Inject(method = "<clinit>", at = @At("HEAD"))
+    /*@Inject(method = "<clinit>", at = @At("HEAD"))
     private static void initMod(CallbackInfo ci) {
         WayFix.init();
     }
@@ -86,12 +86,12 @@ public abstract class MinecraftClientMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void checkEarlyWindow(CallbackInfo ci) {
         //? if neoforge {
-        WayFixNeoForge.checkEarlyWindow();
-        //?}
+        /^WayFixNeoForge.checkEarlyWindow();
+        ^///?}
 
         //? if forge {
-        /*WayFixForge.checkEarlyWindow();
-        *///?}
+        /^WayFixForge.checkEarlyWindow();
+        ^///?}
     }
-    //?}
+    *///?}
 }

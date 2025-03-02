@@ -1,5 +1,5 @@
 //? if fabric {
-/*package net.notcoded.wayfix.platforms.fabric;
+package net.notcoded.wayfix.platforms.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.notcoded.wayfix.WayFix;
@@ -10,4 +10,4 @@ public class WayFixFabric implements ClientModInitializer {
 		WayFix.init();
 	}
 }
-*///?}
+//?}
