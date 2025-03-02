@@ -7,7 +7,6 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.api.Requirement;
 import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -57,19 +56,15 @@ public class ModClothConfig extends ModConfig implements ConfigData {
                 .setSaveConsumer(value -> config.keyModifiersFix = value)
                 .build());
 
-        DropdownMenuBuilder<String> dropdown = entryBuilder.startDropdownMenu(getText("monitorName"), DropdownMenuBuilder.TopCellElementBuilder.of(config.monitorName, (s) -> s))
-                .setDefaultValue("")
-                .setSuggestionMode(false)
-                .setTooltip(getText("monitorName.tooltip"), getText("monitorName.tooltip2"))
-                .setSaveConsumer(value -> config.monitorName = value)
-                .setSelections(Lists.newArrayList(monitors.keySet()));
-
-        try {
-            dropdown.setDisplayRequirement(Requirement.isFalse(() -> WindowHelper.canUseWindowHelper));
-            // Doesn't work on 1.17.1 and 1.19.3
-        } catch (NoClassDefFoundError ignored) { }
-
-        category.addEntry(dropdown.build());
+        if(!WindowHelper.canUseWindowHelper) {
+            category.addEntry(entryBuilder.startDropdownMenu(getText("monitorName"), DropdownMenuBuilder.TopCellElementBuilder.of(config.monitorName, (s) -> s))
+                    .setDefaultValue("")
+                    .setSuggestionMode(false)
+                    .setTooltip(getText("monitorName.tooltip"), getText("monitorName.tooltip2"))
+                    .setSaveConsumer(value -> config.monitorName = value)
+                    .setSelections(Lists.newArrayList(monitors.keySet()))
+                    .build());
+        }
 
         return builder.build();
     }
