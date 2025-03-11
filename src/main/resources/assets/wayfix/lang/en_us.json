@@ -1,5 +1,6 @@
 {
   "wayfix.option.title": "WayFix Options",
+  "wayfix.option.empty": " ",
 
   "wayfix.option.autoScaleGUI": "Auto Scale GUI",
   "wayfix.option.autoScaleGUI.tooltip": "Auto-scales the GUI scale depending on your display's scaling.",
@@ -13,8 +14,8 @@
 
   "wayfix.option.monitorName": "Select Monitor",
   "wayfix.option.monitorName.tooltip": "Full-screens the window in the selected monitor.",
-  "wayfix.option.monitorName.tooltip2": "Leave empty to disable.",
-  "wayfix.option.monitorName.tooltip3": "By default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations.",
+  "wayfix.option.monitorName.tooltip2": "By default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations.",
+  "wayfix.option.monitorName.tooltip3": "Leave empty to disable.",
 
   "wayfix.toast.restart-game.title": "WayFix: Restart your game!",
   "wayfix.toast.restart-game.description": "The early loading screen has been disabled."

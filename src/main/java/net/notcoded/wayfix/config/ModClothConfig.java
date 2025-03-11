@@ -60,7 +60,7 @@ public class ModClothConfig extends ModConfig implements ConfigData {
             category.addEntry(entryBuilder.startDropdownMenu(getText("monitorName"), DropdownMenuBuilder.TopCellElementBuilder.of(config.monitorName, (s) -> s))
                     .setDefaultValue("")
                     .setSuggestionMode(false)
-                    .setTooltip(getText("monitorName.tooltip"), getText("monitorName.tooltip2"))
+                    .setTooltip(getText("monitorName.tooltip"), getText("monitorName.tooltip2"), getText("empty"), getText("monitorName.tooltip3"))
                     .setSaveConsumer(value -> config.monitorName = value)
                     .setSelections(Lists.newArrayList(monitors.keySet()))
                     .build());
