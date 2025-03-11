@@ -4,6 +4,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.notcoded.wayfix.config.ModClothConfig;
 import net.notcoded.wayfix.config.ModConfig;
+import net.notcoded.wayfix.platforms.ModPlatform;
 import net.notcoded.wayfix.util.WindowHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,11 +13,14 @@ import org.lwjgl.glfw.GLFW;
 public class WayFix {
     public static final Logger LOGGER = LogManager.getLogger(WayFix.class);
     public static ModConfig config;
+    public static ModPlatform platform;
 
-    public static void init() {
+    public static void init(ModPlatform platform) {
         AutoConfig.register(ModClothConfig.class, GsonConfigSerializer::new);
         WayFix.config = AutoConfig.getConfigHolder(ModClothConfig.class).getConfig();
+        WayFix.platform = platform;
 
+        if(platform.isDevelopmentEnvironment()) return;
         WindowHelper.checkIfCanUseWindowHelper();
     }
 

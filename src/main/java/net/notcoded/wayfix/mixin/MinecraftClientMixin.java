@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 //? if forge || neoforge {
 /*import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.notcoded.wayfix.platforms.ModPlatform;
 *///?}
 
 //? if forge {
@@ -80,7 +81,17 @@ public abstract class MinecraftClientMixin {
     //? if forge || neoforge {
     /*@Inject(method = "<clinit>", at = @At("HEAD"))
     private static void initMod(CallbackInfo ci) {
-        WayFix.init();
+        ModPlatform platform;
+
+        //? if neoforge {
+        /^platform = new WayFixNeoForge.NeoForgePlatform();
+        ^///?}
+
+        //? if forge {
+        /^platform = new WayFixForge.ForgePlatform();
+        ^///?}
+
+        WayFix.init(platform);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))

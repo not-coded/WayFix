@@ -4,10 +4,13 @@
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLConfig;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLLoader;
 import net.notcoded.wayfix.config.ModClothConfig;
+import net.notcoded.wayfix.platforms.ModPlatform;
 //? if <1.20.6 {
 /^import net.neoforged.neoforge.client.ConfigScreenHandler;
 ^///?} else {
@@ -37,6 +40,23 @@ public class WayFixNeoForge {
                 Text.translatable("wayfix.toast.restart-game.title"),
                 Text.translatable("wayfix.toast.restart-game.description"))
         );
+    }
+
+    public static class NeoForgePlatform implements ModPlatform {
+        @Override
+        public String getModLoader() {
+            return "NeoForge";
+        }
+
+        @Override
+        public boolean isModLoaded(String modId) {
+            return ModList.get().isLoaded(modId);
+        }
+
+        @Override
+        public boolean isDevelopmentEnvironment() {
+            return !FMLLoader.isProduction();
+        }
     }
 }
 *///?}
