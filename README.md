@@ -27,9 +27,8 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 - Key Modifiers Fix
   - Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.
 
-- **Fullscreen**
-  - Select Monitor
-    - Select which monitor you want to fullscreen Minecraft to. (primary monitor by default) (must turn on in seperate config option)
+- Select Monitor
+  - Select which monitor you want to fullscreen Minecraft to. (primary monitor by default)
 
 > [!NOTE]
 > By default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations (unable to get X and Y position).

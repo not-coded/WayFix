@@ -7,15 +7,15 @@
   "wayfix.option.autoScaleGUI.tooltip2": "(e.g. 2 GUI Scale on 1920x1080 at 100% → 4 GUI Scale on 3840x2160 at 200%)",
 
   "wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
-  "wayfix.option.injectIcon.tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon (requires restart).",
+  "wayfix.option.injectIcon.tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon.",
 
   "wayfix.option.keyModifiersFix": "Key Modifiers Fix",
-  "wayfix.option.keyModifiersFix.tooltip": "Fixes keyboard combinations such as 'CTRL + A' or 'CTRL + C' being sent in chat.",
+  "wayfix.option.keyModifiersFix.tooltip": "Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.",
 
   "wayfix.option.monitorName": "Select Monitor",
-  "wayfix.option.monitorName.tooltip": "Full-screens the window in the selected monitor.",
+  "wayfix.option.monitorName.tooltip": "Full-screens the minecraft window in the selected monitor.",
   "wayfix.option.monitorName.tooltip2": "By default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations.",
-  "wayfix.option.monitorName.tooltip3": "Leave empty to disable.",
+  "wayfix.option.monitorName.tooltip3": "Leave empty to use primary monitor.",
 
   "wayfix.toast.restart-game.title": "WayFix: Restart your game!",
   "wayfix.toast.restart-game.description": "The early loading screen has been disabled."
