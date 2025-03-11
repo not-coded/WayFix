@@ -133,7 +133,7 @@ tasks.processResources {
         exclude("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta")
     }
 
-    if(isForge) {
+    if(isForge || isNeoForge) {
         filesMatching("META-INF/*mods.toml") { expand(expandProps) }
         exclude("fabric.mod.json")
     }
