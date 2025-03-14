@@ -1,4 +1,4 @@
 changes:
 - add better config screen
-- fix monitor selecting not working
 - fix neoforge builds not working
+- add cloth config as a dependency for forge
