@@ -122,10 +122,14 @@ if (stonecutter.current.isActive) {
 }
 
 tasks.processResources {
+    var clothConfigSeparator = "_"
+    if(minecraft == "1.16.5") clothConfigSeparator = "-"
+
     val expandProps = mapOf(
         "version" to version,
         "minecraftVersion" to mod.prop("mc_dep"),
-        "javaVersion" to mod.dep("java")
+        "javaVersion" to mod.dep("java"),
+        "cloth_config_separator" to clothConfigSeparator
     )
 
     if (isFabric) {

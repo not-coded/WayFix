@@ -21,5 +21,13 @@ versionRange = "${minecraftVersion}"
 ordering = "NONE"
 side = "CLIENT"
 
+[[dependencies.wayfix]]
+modId = "cloth${cloth_config_separator}config"
+type = "required"
+mandatory = true
+versionRange = "[4.17.101,)"
+ordering = "AFTER"
+side = "CLIENT"
+
 [[mixins]]
 config = "wayfix.mixins.json"
