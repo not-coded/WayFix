@@ -1,7 +1,7 @@
 plugins {
     id("dev.architectury.loom")
     id("architectury-plugin")
-    id("com.modrinth.minotaur")
+    id("me.modmuss50.mod-publish-plugin")
     id("com.github.johnrengelman.shadow")
 }
 
@@ -151,25 +151,49 @@ tasks.build {
     description = "Must run through 'chiseledBuild'"
 }
 
-modrinth {
-    token.set(System.getenv("MODRINTH_TOKEN"))
-    projectId.set("wayfix")
-
-    versionNumber.set(version.toString())
-    versionName.set("v${mod.version}+${mod.prop("version_name")} | ${loader.upperCaseFirst()}")
-    versionType.set("release")
-    uploadFile.set(tasks.remapJar)
-    gameVersions.addAll(mod.prop("mc_targets").toString().split(","))
-    //featured = true
-
-    loaders.add(loader)
-    if(isFabric) loaders.add("quilt")
-
-    dependencies {
-        required.project("cloth-config")
-        if(isFabric) optional.project("modmenu")
-    }
+publishMods {
+    version.set(project.version.toString())
+    displayName.set("${loader.upperCaseFirst()} | ${mod.prop("version_name")} [v${mod.version}]")
+    type = STABLE
+    file.set(tasks.remapJar.get().archiveFile)
+    val mcVersions = mod.prop("mc_targets").split(",")
 
     changelog = rootProject.file("CHANGES.md").readText()
     if(minecraft == "1.16.5" && isForge) changelog = changelog.get() + "\nNOTE: You must disable the early loading screen manually, this can be done by adding \"-Dfml.earlyprogresswindow=false\" to your java arguments or by installing the [No Early loading progress](https://www.curseforge.com/minecraft/mc-mods/no-early-loading-progress) mod."
+
+    modLoaders.add(loader)
+    if(isFabric) modLoaders.add("quilt")
+
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_API_KEY")
+
+        projectId = "hxIWsdEF"
+        minecraftVersions.addAll(mcVersions)
+
+        requires("cloth-config")
+        if(isFabric) optional("modmenu")
+    }
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+
+        projectId = "1224888"
+        minecraftVersions.addAll(mcVersions)
+
+        val javaVersion = mod.dep("java")
+        val java = if (javaVersion == "8") JavaVersion.VERSION_1_8 else if(javaVersion == "17") JavaVersion.VERSION_17 else JavaVersion.VERSION_21
+        javaVersions.add(java)
+
+        clientRequired = true
+        serverRequired = false
+
+        changelogType = "markdown"
+
+        requires("cloth-config")
+        if(isFabric) optional("modmenu")
+    }
+
+    //TODO: remove this when actually want to release
+    dryRun = true
 }

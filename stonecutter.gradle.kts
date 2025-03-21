@@ -3,7 +3,7 @@ plugins {
     id("dev.architectury.loom") version "1.9.428" apply false
     id("architectury-plugin") version "3.4.161" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("com.modrinth.minotaur") version "2.+" apply false
+    id("me.modmuss50.mod-publish-plugin") version "0.8.4" apply false
 }
 stonecutter active "1.20.6-fabric" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
@@ -13,9 +13,9 @@ stonecutter registerChiseled tasks.register("chiseledBuild", stonecutter.chisele
     group = "project"
     ofTask("buildAndCollect")
 }
-stonecutter registerChiseled tasks.register("chiseledModrinth", stonecutter.chiseled) {
+stonecutter registerChiseled tasks.register("chiseledPublishMods", stonecutter.chiseled) {
     group = "project"
-    ofTask("modrinth")
+    ofTask("publishMods")
 }
 stonecutter registerChiseled tasks.register("chiseledRunAllClients", stonecutter.chiseled) {
     group = "project"
