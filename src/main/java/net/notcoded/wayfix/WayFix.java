@@ -2,6 +2,7 @@ package net.notcoded.wayfix;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.notcoded.wayfix.config.ModClothConfig;
 import net.notcoded.wayfix.config.ModConfig;
 import net.notcoded.wayfix.platforms.ModPlatform;
@@ -16,7 +17,7 @@ public class WayFix {
     public static ModPlatform platform;
 
     public static void init(ModPlatform platform) {
-        AutoConfig.register(ModClothConfig.class, GsonConfigSerializer::new);
+        AutoConfig.register(ModClothConfig.class, JanksonConfigSerializer::new);
         WayFix.config = AutoConfig.getConfigHolder(ModClothConfig.class).getConfig();
         WayFix.platform = platform;
 

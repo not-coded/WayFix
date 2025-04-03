@@ -9,6 +9,7 @@ import net.neoforged.fml.loading.FMLConfig;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLLoader;
+import net.notcoded.wayfix.WayFix;
 import net.notcoded.wayfix.config.ModClothConfig;
 import net.notcoded.wayfix.platforms.ModPlatform;
 //? if <1.20.6 {
@@ -36,10 +37,15 @@ public class WayFixNeoForge {
         if(!FMLConfig.getBoolConfigValue(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL)) return;
         FMLConfig.updateConfig(FMLConfig.ConfigValue.EARLY_WINDOW_CONTROL, false);
 
-        MinecraftClient.getInstance().getToastManager().add(new SystemToast(SystemToast.Type.WORLD_BACKUP,
-                Text.translatable("wayfix.toast.restart-game.title"),
-                Text.translatable("wayfix.toast.restart-game.description"))
-        );
+        try {
+            MinecraftClient.getInstance().getToastManager().add(new SystemToast(SystemToast.Type.WORLD_BACKUP,
+                    Text.translatable("wayfix.toast.restart-game.title"),
+                    Text.translatable("wayfix.toast.restart-game.description"))
+            );
+        } catch (Exception ignored) {
+            WayFix.LOGGER.warn("Restart your game! The early loading screen has been disabled.");
+        }
+
     }
 
     public static class NeoForgePlatform implements ModPlatform {

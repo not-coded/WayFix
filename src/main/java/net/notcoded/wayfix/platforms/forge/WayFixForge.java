@@ -64,9 +64,7 @@ public class WayFixForge {
                     Text.translatable("wayfix.toast.restart-game.title"),
                     Text.translatable("wayfix.toast.restart-game.description"))
             );
-        } catch(NoClassDefFoundError ignored) {
-            // womp womp, on 1.20 (or older forge version)
-        }
+        } catch(Exception ignored) { }
 
         //?}
     }
