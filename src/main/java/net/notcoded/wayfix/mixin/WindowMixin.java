@@ -43,10 +43,6 @@ import net.minecraft.resource.InputSupplier;
 
 @Mixin(Window.class)
 public abstract class WindowMixin {
-    @Shadow protected abstract void onWindowPosChanged(long window, int x, int y);
-
-    @Shadow @Final private long handle;
-
     // forge only allows injecting into constructors on return, this is a jank fix, but it works
     //? if forge || (neoforge && 1.20.4) {
     /*@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwDefaultWindowHints()V", remap = false))
@@ -64,53 +60,6 @@ public abstract class WindowMixin {
             if(WayFix.config.injectIcon) DesktopFileInjector.inject();
             GLFW.glfwWindowHintString(GLFW.GLFW_WAYLAND_APP_ID, DesktopFileInjector.APP_ID);
         }
-    }
-
-    @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
-    private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WindowHelper.canUseWindowHelper ? instance.getMonitor(window) : wayfix$getMonitor(instance);
-    }
-
-    @Unique
-    private Monitor wayfix$getMonitor(MonitorTracker instance) {
-        String monitorName = WayFix.config.monitorName;
-        long monitorID = GLFW.glfwGetPrimaryMonitor();
-        if(!monitorName.trim().isEmpty()) {
-            monitorID = ModClothConfig.monitors.getOrDefault(monitorName, 0L);
-            if(monitorID == 0L &&
-                    monitorName.toLowerCase().startsWith("dp-") &&
-                    Character.isDigit(monitorName.charAt(monitorName.length() - 1))
-            ) {
-                ArrayList<Long> values = new ArrayList<>(ModClothConfig.monitors.values());
-                values.sort(Collections.reverseOrder());
-
-                try {
-                    monitorID = values.get(Integer.parseInt(monitorName.substring(monitorName.length() - 1)) - 1);
-                } catch (Exception ignored) { }
-            }
-        }
-
-
-
-        if(monitorID <= 0 || instance.getMonitor(monitorID) == null) {
-            WayFix.LOGGER.warn("Error occurred while trying to set monitor.");
-            WayFix.LOGGER.warn("Using primary monitor instead.");
-            monitorID = GLFW.glfwGetPrimaryMonitor();
-        }
-
-        return instance.getMonitor(monitorID);
-    }
-
-
-    // KDE Plasma ONLY
-    @Inject(method = "updateWindowRegion", at = @At("HEAD"))
-    private void fixWrongMonitor(CallbackInfo ci) {
-        if(!WindowHelper.canUseWindowHelper) return;
-
-        int[] pos = WindowHelper.getWindowPos();
-        if(pos == null) return;
-
-        onWindowPosChanged(this.handle, pos[0], pos[1]);
     }
     
     @Inject(method = "setIcon", at = @At("HEAD"), cancellable = true)

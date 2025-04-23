@@ -6,11 +6,13 @@
   "client": [
     "GLXMixin",
     "MinecraftClientMixin",
+    "MonitorFixWindowMixin",
     "MonitorTrackerMixin",
     "TextFieldWidgetMixin",
     "WindowMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "net.notcoded.wayfix.mixin.compat.MixinPlugin"
 }

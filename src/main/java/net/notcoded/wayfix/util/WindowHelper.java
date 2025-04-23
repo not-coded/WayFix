@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 
 public class WindowHelper {
 
+    public static boolean enabled = true;
+
     public static boolean canUseWindowHelper = false;
 
     public static void checkIfCanUseWindowHelper() {

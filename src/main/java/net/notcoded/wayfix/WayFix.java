@@ -21,7 +21,7 @@ public class WayFix {
         WayFix.config = AutoConfig.getConfigHolder(ModClothConfig.class).getConfig();
         WayFix.platform = platform;
 
-        if(platform.isDevelopmentEnvironment()) return;
+        if(platform.isDevelopmentEnvironment() || !WindowHelper.enabled) return;
         WindowHelper.checkIfCanUseWindowHelper();
     }
 

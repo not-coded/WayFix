@@ -56,7 +56,7 @@ public class ModClothConfig extends ModConfig implements ConfigData {
                 .setSaveConsumer(value -> config.keyModifiersFix = value)
                 .build());
 
-        if(!WindowHelper.canUseWindowHelper) {
+        if(!WindowHelper.canUseWindowHelper && WindowHelper.enabled) {
             category.addEntry(entryBuilder.startDropdownMenu(getText("monitorName"), DropdownMenuBuilder.TopCellElementBuilder.of(config.monitorName, (s) -> s))
                     .setDefaultValue("")
                     .setSuggestionMode(false)
