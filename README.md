@@ -34,6 +34,10 @@ Fixes multiple issues regarding Wayland compatibility for Minecraft.
 > By default Minecraft sometimes full-screens on the wrong monitor due to Wayland window limitations (unable to get X and Y position).
 > This is automatically **fixed only on KDE Plasma** without specifying the monitor by installing **[kdotool](https://github.com/jinliu/kdotool)**.
 
+> [!TIP]
+> You can configure WayFix's features by navigating to:  
+> **Main Menu → Mods → WayFix → Configure**
+
 ## Building
 - Clone the repository
   - `git clone https://github.com/not-coded/WayFix`
