@@ -1,7 +1,12 @@
 package net.notcoded.wayfix.util;
 
 import net.minecraft.client.MinecraftClient;
+
+import net.minecraft.client.toast.SystemToast;
+import net.minecraft.text.Text;
+
 //? if >=1.19.3 {
+
 import net.minecraft.resource.InputSupplier;
 import java.util.List;
 //?} elif <1.19.3 {
@@ -9,6 +14,7 @@ import java.util.List;
 import java.util.Arrays;
 import java.io.ByteArrayInputStream;
 *///?}
+
 import net.notcoded.wayfix.WayFix;
 import org.apache.commons.io.IOUtils;
 import javax.imageio.ImageIO;
@@ -35,6 +41,8 @@ public class DesktopFileInjector {
     private static final String FILE_NAME = APP_ID + ".desktop";
     private static final String RESOURCE_LOCATION = "/assets/wayfix/" + FILE_NAME;
 
+    public static boolean flatpakInjectFailed = false;
+
     public static void inject() {
         try (InputStream stream = DesktopFileInjector.class.getResourceAsStream(RESOURCE_LOCATION)) {
             Path location = getDesktopFileLocation();
@@ -42,8 +50,8 @@ public class DesktopFileInjector {
             String desktop = System.getenv("XDG_CURRENT_DESKTOP");
             String version = MinecraftClient.getInstance().getGameVersion();
             injectFile(location, String.format(IOUtils.toString(Objects.requireNonNull(stream), StandardCharsets.UTF_8),
-                    version, ICON_NAME.substring(0, ICON_NAME.lastIndexOf(".")), !desktop.contains("GNOME") ? "Hidden=true" : "").getBytes(StandardCharsets.UTF_8));
-        } catch (IOException e) {
+                    version, ICON_NAME.substring(0, ICON_NAME.lastIndexOf(".")), (desktop != null && !desktop.contains("GNOME")) ? "Hidden=true" : "").getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
             WayFix.LOGGER.error("Failed to inject icon: ", e);
         }
 
@@ -58,7 +66,7 @@ public class DesktopFileInjector {
                 Path target = getIconFileLocation(image.getWidth(), image.getHeight());
                 injectFile(target, IOUtils.toByteArray(supplier.get()));
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 return;
             }
         }
@@ -105,8 +113,12 @@ public class DesktopFileInjector {
         try {
             Files.createDirectories(target.getParent());
             new File(String.valueOf(Files.write(target, data))).deleteOnExit();
-        } catch (IOException e) {
+        } catch (Exception e) {
             WayFix.LOGGER.error("Failed to inject file: ", e);
+
+            if(System.getenv().containsKey("FLATPAK_ID") && !flatpakInjectFailed) {
+                flatpakInjectFailed = true;
+            }
         }
     }
 
@@ -140,7 +152,7 @@ public class DesktopFileInjector {
                 new ProcessBuilder("dbus-send", "--session", "/KIconLoader", "org.kde.KIconLoader.iconChanged", "int32:0", "int32:0").start();
             }
 
-        } catch (IOException ignored) {
+        } catch (Exception ignored) {
             WayFix.LOGGER.warn("Failed to update the icon cache, you might see the incorrect icons for the game.");
         }
     }

@@ -1,6 +1,6 @@
 package net.notcoded.wayfix.mixin.compat;
 
-//?if fabric {
+//? if fabric {
 import net.fabricmc.loader.api.FabricLoader;
 //?}
 import net.notcoded.wayfix.util.WindowHelper;
@@ -24,7 +24,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        //?if fabric {
+        //? if fabric {
         if(mixinClassName.equals("net.notcoded.wayfix.mixin.MonitorFixWindowMixin")
                 && FabricLoader.getInstance().isModLoaded("vulkanmod")
         ) {

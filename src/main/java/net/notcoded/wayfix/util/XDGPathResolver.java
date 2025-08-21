@@ -13,16 +13,17 @@ public class XDGPathResolver {
     private static Path getHome(){
         String home = System.getenv().getOrDefault("HOME", System.getProperty("user.home"));
         if (home == null || home.isEmpty()) {
-            throw new IllegalStateException("could not resolve user home");
+            //throw new IllegalStateException("could not resolve user home");
+            return null;
         }
         return Paths.get(home);
     }
 
     public static Path getUserDataLocation() {
-        String xdgDataHome = System.getenv("XDG_DATA_HOME");
-        if (xdgDataHome == null || xdgDataHome.isEmpty()) {
+        // Prefer using the home directory over XDG_DATA_HOME because flatpak points to /home/user/.var/app/org.prismlauncher.PrismLauncher/data/ instead
+        if(getHome() != null) {
             return getHome().resolve(".local/share/");
         }
-        return Paths.get(xdgDataHome);
+        return Paths.get(System.getenv("XDG_DATA_HOME"));
     }
 }

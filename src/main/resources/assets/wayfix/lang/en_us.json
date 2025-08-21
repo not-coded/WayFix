@@ -17,6 +17,12 @@
   "wayfix.option.monitorName.tooltip2": "By default Minecraft sometimes full-screens on the wrong monitor due to Wayland limitations.",
   "wayfix.option.monitorName.tooltip3": "Leave empty to use primary monitor.",
 
+  "wayfix.option.kdotoolWarning": "Show kdotool Warning",
+  "wayfix.option.kdotoolWarning.tooltip": "Show a warning if kdotool is not installed in console.",
+
+  "wayfix.option.disableWindowHelper": "Disable Window Helper",
+  "wayfix.option.disableWindowHelper.tooltip": "Disable the Window Helper functionality.",
+
   "wayfix.toast.restart-game.title": "WayFix: Restart your game!",
   "wayfix.toast.restart-game.description": "The early loading screen has been disabled."
 }

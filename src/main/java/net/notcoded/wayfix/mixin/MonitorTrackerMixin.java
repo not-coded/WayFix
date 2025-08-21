@@ -20,7 +20,7 @@ public class MonitorTrackerMixin {
 
     @Inject(method = {"handleMonitorEvent", "<init>"}, at = @At("RETURN"))
     private void handleConfigAdditions(CallbackInfo ci) {
-        if(!WindowHelper.canUseWindowHelper) this.wayfix$refreshMonitors();
+        if(!WindowHelper.canUseWindowHelper()) this.wayfix$refreshMonitors();
     }
 
     @Unique

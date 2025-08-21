@@ -28,7 +28,7 @@ public abstract class MonitorFixWindowMixin {
 
     @Redirect(method = "updateWindowRegion", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/MonitorTracker;getMonitor(Lnet/minecraft/client/util/Window;)Lnet/minecraft/client/util/Monitor;"))
     private Monitor fixWrongMonitor(MonitorTracker instance, Window window) {
-        return WindowHelper.canUseWindowHelper ? instance.getMonitor(window) : wayfix$getMonitor(instance);
+        return WindowHelper.canUseWindowHelper() ? instance.getMonitor(window) : wayfix$getMonitor(instance);
     }
 
     @Unique
@@ -65,7 +65,7 @@ public abstract class MonitorFixWindowMixin {
     // KDE Plasma ONLY
     @Inject(method = "updateWindowRegion", at = @At("HEAD"))
     private void fixWrongMonitor(CallbackInfo ci) {
-        if(!WindowHelper.canUseWindowHelper) return;
+        if(!WindowHelper.canUseWindowHelper()) return;
 
         int[] pos = WindowHelper.getWindowPos();
         if(pos == null) return;

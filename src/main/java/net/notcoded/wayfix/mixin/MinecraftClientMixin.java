@@ -1,20 +1,24 @@
 package net.notcoded.wayfix.mixin;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
+import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.util.Window;
 
+import net.minecraft.text.Text;
 import net.notcoded.wayfix.WayFix;
+import net.notcoded.wayfix.util.DesktopFileInjector;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if forge || neoforge {
-/*import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.notcoded.wayfix.platforms.ModPlatform;
+/*import net.notcoded.wayfix.platforms.ModPlatform;
 *///?}
 
 //? if forge {
@@ -92,17 +96,6 @@ public abstract class MinecraftClientMixin {
         ^///?}
 
         WayFix.init(platform);
-    }
-
-    @Inject(method = "<init>", at = @At("RETURN"))
-    private void checkEarlyWindow(CallbackInfo ci) {
-        //? if neoforge {
-        /^WayFixNeoForge.checkEarlyWindow();
-        ^///?}
-
-        //? if forge {
-        /^WayFixForge.checkEarlyWindow();
-        ^///?}
     }
     *///?}
 }

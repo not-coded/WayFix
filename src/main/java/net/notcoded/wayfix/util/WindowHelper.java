@@ -2,6 +2,7 @@ package net.notcoded.wayfix.util;
 
 import net.minecraft.client.MinecraftClient;
 import net.notcoded.wayfix.WayFix;
+import net.notcoded.wayfix.config.ModConfig;
 //? if <1.19 {
 /*import org.apache.commons.io.IOUtils;
 *///?}
@@ -17,15 +18,23 @@ public class WindowHelper {
     public static boolean canUseWindowHelper = false;
 
     public static void checkIfCanUseWindowHelper() {
-        if(!System.getenv("XDG_CURRENT_DESKTOP").contains("KDE")) return; // kdotool only works with KDE and I haven't found an alternative.
+        if(!isKDE()) return; // kdotool only works with KDE and I haven't found an alternative.
 
         try {
             new ProcessBuilder("kdotool").start();
             canUseWindowHelper = true;
-        } catch (IOException ignored) {
-            WayFix.LOGGER.warn("WayFix recommends installing 'kdotool' to properly fix the minecraft full-screening functionality.");
-
+        } catch (Exception ignored) {
+            if(WayFix.config.kdotoolWarning) WayFix.LOGGER.warn("WayFix recommends installing 'kdotool' to properly fix the minecraft full-screening functionality.");
         }
+    }
+
+    public static boolean canUseWindowHelper() {
+        return (canUseWindowHelper && !WayFix.config.disableWindowHelper);
+    }
+
+    public static boolean isKDE() {
+        String currentDesktop = System.getenv("XDG_CURRENT_DESKTOP");
+        return currentDesktop != null && currentDesktop.contains("KDE");
     }
 
     private static String windowID = "";
@@ -44,10 +53,13 @@ public class WindowHelper {
             //?} elif <1.18.2 {
             /*String result = new String(IOUtils.toByteArray(process.getInputStream()));
             *///?}
-            Pattern pattern = Pattern.compile("Position:\\s*(\\d+),(\\d+)");
+            Pattern pattern = Pattern.compile("Position:\\s*(-?[\\d.]+),\\s*(-?[\\d.]+)");
             Matcher matcher = pattern.matcher(result);
             if (matcher.find()) {
-                return new int[]{Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2))};
+                return new int[]{
+                    (int)Double.parseDouble(matcher.group(1)),
+                    (int)Double.parseDouble(matcher.group(2))
+                };
             } else {
                 return null;
             }

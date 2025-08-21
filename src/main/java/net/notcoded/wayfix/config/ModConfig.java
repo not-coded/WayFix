@@ -15,4 +15,10 @@ public class ModConfig {
 
     @Comment("Full-screens the minecraft window in the selected monitor.\n[!] If you use KDE Plasma with kdotool installed then you can ignore this setting.\n\nPut the name of the monitor (that is shown in your OS monitor settings) in the quotes.\nIf you don't know the monitor of your name then you can put 'DP-x' (x being a number) e.g. DP-1\n\nLeave empty to use primary monitor.")
     public String monitorName = "";
+
+    @Comment("Show a warning if kdotool is not installed (Ignore this if you don't use KDE Plasma)")
+    public boolean kdotoolWarning = true;
+
+    @Comment("Disable the Window Helper functionality (Ignore this if you don't use KDE Plasma)")
+    public boolean disableWindowHelper = false;
 }
