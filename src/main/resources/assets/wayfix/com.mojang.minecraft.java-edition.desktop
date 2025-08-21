@@ -5,4 +5,4 @@ Icon=%s
 Type=Application
 NoDisplay=true
 Categories=Game;
-%s
+StartupWMClass=com.mojang.minecraft.java-edition
