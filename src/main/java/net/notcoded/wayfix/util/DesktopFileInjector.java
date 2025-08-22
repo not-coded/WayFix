@@ -64,6 +64,7 @@ public class DesktopFileInjector {
                 return;
             }
         }
+        updateIconSystem();
     }
     //?} elif <1.19.3 {
     
@@ -97,6 +98,8 @@ public class DesktopFileInjector {
                 return;
             }
         }
+
+        updateIconSystem();
     }
     *///?}
 
@@ -117,5 +120,31 @@ public class DesktopFileInjector {
 
     private static Path getDesktopFileLocation() {
         return XDGPathResolver.getUserDataLocation().resolve("applications").resolve(FILE_NAME);
+    }
+
+    private static void updateIconSystem() {
+        String desktop = System.getenv("XDG_CURRENT_DESKTOP");
+        if(desktop == null || desktop.trim().isEmpty()) return;
+        
+        String[] process = new String[]{"xdg-icon-resource", "forceupdate"};
+
+        if(desktop.contains("KDE")) {
+            // https://www.reddit.com/r/kde/comments/g986ql/comment/fovvkod
+            process = new String[]{"dbus-send", "--session", "/KGlobalSettings", "org.kde.KGlobalSettings.notifyChange", "int32:0", "int32:0"};
+        } else if(desktop.contains("GNOME"))  {
+            process = new String[]{"gtk-update-icon-cache"};
+        }
+
+        ProcessBuilder builder = new ProcessBuilder(process);
+        try {
+            builder.start();
+
+            if(desktop.contains("KDE")) {
+                new ProcessBuilder("dbus-send", "--session", "/KIconLoader", "org.kde.KIconLoader.iconChanged", "int32:0", "int32:0").start();
+            }
+
+        } catch (Exception ignored) {
+            WayFix.LOGGER.warn("Failed to update the icon cache, you might see the incorrect icons for the game.");
+        }
     }
 }
