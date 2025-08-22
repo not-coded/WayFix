@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://cdn.modrinth.com/data/hxIWsdEF/11a8bb4badc214361593ec6d33e29998bcc6ef46.png" height=128 alt="WayFix Logo"/>
+<img src="https://cdn.modrinth.com/data/hxIWsdEF/400087fd0fb7e47b6a87d211c7a08138b855250e.png" width=128 height=128 alt="WayFix Logo"/>
 <br>
 
 # WayFix
