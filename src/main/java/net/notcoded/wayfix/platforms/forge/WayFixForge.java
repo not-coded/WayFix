@@ -64,7 +64,7 @@ public class WayFixForge {
                     Text.translatable("wayfix.toast.restart-game.title"),
                     Text.translatable("wayfix.toast.restart-game.description"))
             );
-        } catch(Exception ignored) { }
+        } catch(Exception | Error ignored) { }
 
         //?}
     }

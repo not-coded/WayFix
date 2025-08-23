@@ -42,7 +42,7 @@ public class WayFixNeoForge {
                     Text.translatable("wayfix.toast.restart-game.title"),
                     Text.translatable("wayfix.toast.restart-game.description"))
             );
-        } catch (Exception ignored) {
+        } catch (Exception | Error ignored) {
             WayFix.LOGGER.warn("Restart your game! The early loading screen has been disabled.");
         }
 

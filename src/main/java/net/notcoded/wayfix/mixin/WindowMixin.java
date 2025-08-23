@@ -57,7 +57,8 @@ public abstract class WindowMixin {
         if (isWayland()) {
             GLFW.glfwWindowHint(GLFW.GLFW_FOCUS_ON_SHOW, GLFW.GLFW_FALSE);
 
-            if(WayFix.config.injectIcon) DesktopFileInjector.inject();
+            if(!WayFix.config.injectIcon) return;
+            DesktopFileInjector.inject();
             GLFW.glfwWindowHintString(GLFW.GLFW_WAYLAND_APP_ID, DesktopFileInjector.APP_ID);
         }
     }
