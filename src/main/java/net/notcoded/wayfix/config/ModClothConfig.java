@@ -50,6 +50,13 @@ public class ModClothConfig extends ModConfig implements ConfigData {
                 .setSaveConsumer(value -> config.injectIcon = value)
                 .build());
 
+        category.addEntry(entryBuilder.startBooleanToggle(getText("useAlternativeIconPath"), config.useAlternativeIconPath)
+                .setDefaultValue(false)
+                .setTooltip(getText("useAlternativeIconPath.tooltip"), getText("useAlternativeIconPath.tooltip2"))
+                .requireRestart()
+                .setSaveConsumer(value -> config.useAlternativeIconPath = value)
+                .build());
+
         category.addEntry(entryBuilder.startBooleanToggle(getText("keyModifiersFix"), config.keyModifiersFix)
                 .setDefaultValue(true)
                 .setTooltip(getText("keyModifiersFix.tooltip"))

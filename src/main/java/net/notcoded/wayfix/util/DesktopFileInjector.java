@@ -114,8 +114,17 @@ public class DesktopFileInjector {
 
 
     private static Path getIconFileLocation(int width, int height) {
-        return XDGPathResolver.getUserDataLocation().resolve("icons/hicolor").resolve(width + "x" + height)
-                .resolve("apps").resolve(ICON_NAME);
+        Path path;
+        if(WayFix.config.useAlternativeIconPath && XDGPathResolver.getHome() != null) {
+            path = XDGPathResolver.getHome().resolve(".icons");
+        } else {
+            path = XDGPathResolver.getUserDataLocation().resolve("icons");
+        }
+
+        return path.resolve("hicolor")
+                .resolve(width + "x" + height)
+                .resolve("apps")
+                .resolve(ICON_NAME);
     }
 
     private static Path getDesktopFileLocation() {

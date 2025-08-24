@@ -9,6 +9,10 @@
   "wayfix.option.injectIcon": "Inject Minecraft Icon at Startup",
   "wayfix.option.injectIcon.tooltip": "Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon.",
 
+  "wayfix.option.useAlternativeIconPath": "Use Alternative Icon Path",
+  "wayfix.option.useAlternativeIconPath.tooltip": "Recommended if on GNOME 48 or are having issues.",
+  "wayfix.option.useAlternativeIconPath.tooltip2": "Injects the icons at ~/.icons instead of ~/.local/share/icons",
+
   "wayfix.option.keyModifiersFix": "Key Modifiers Fix",
   "wayfix.option.keyModifiersFix.tooltip": "Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.",
 

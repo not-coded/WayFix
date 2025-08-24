@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class XDGPathResolver {
 
-    private static Path getHome(){
+    public static Path getHome(){
         String home = System.getenv().getOrDefault("HOME", System.getProperty("user.home"));
         if (home == null || home.isEmpty()) {
             //throw new IllegalStateException("could not resolve user home");

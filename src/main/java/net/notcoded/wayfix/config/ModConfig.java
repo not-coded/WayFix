@@ -10,6 +10,9 @@ public class ModConfig {
     @Comment("Injects the Minecraft Icon at Startup instead of defaulting to the normal Wayland icon.")
     public boolean injectIcon = true;
 
+    @Comment("[!] Recommended if on GNOME 48 or are having issues.\nInjects the icons at ~/.icons instead of ~/.local/share/icons")
+    public boolean useAlternativeIconPath = false;
+
     @Comment("Fixes issues where keyboard combinations like 'CTRL + A' or 'CTRL + C' are sent as characters in chat instead of being recognized as key combinations.")
     public boolean keyModifiersFix = true;
 
