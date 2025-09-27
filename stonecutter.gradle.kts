@@ -3,7 +3,7 @@ plugins {
     id("dev.architectury.loom") version "1.11.440" apply false
     id("architectury-plugin") version "3.4.162" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("me.modmuss50.mod-publish-plugin") version "0.8.4" apply false
+    id("me.modmuss50.mod-publish-plugin") version "1.0.0" apply false
 }
 stonecutter active "1.20.6-fabric" /* [SC] DO NOT EDIT */
 stonecutter.automaticPlatformConstants = true
