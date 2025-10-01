@@ -31,27 +31,8 @@ import net.minecraftforge.client.ConfigScreenHandler;
 @OnlyIn(Dist.CLIENT)
 public class WayFixForge {
 	public WayFixForge() {
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> WayFixForge::setupConfigScreen);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ConfigScreen::setupConfigScreen);
 	}
-
-    private static void setupConfigScreen() {
-        //? if >=1.19 {
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
-                new ConfigScreenHandler.ConfigScreenFactory(
-                        (client, parent) -> ModClothConfig.buildScreen(parent)
-                )
-        );
-        //?} elif >1.16.5 <1.19 {
-        /^ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, () ->
-                new ConfigGuiHandler.ConfigGuiFactory((client, parent) -> ModClothConfig.buildScreen(parent)
-        ));
-        ^///?} elif 1.16.5 {
-        /^ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
-                (client, parent) -> ModClothConfig.buildScreen(parent)
-        );
-        ^///?}
-    }
-
 
     public static void checkEarlyWindow() {
 
@@ -84,6 +65,26 @@ public class WayFixForge {
         public boolean isDevelopmentEnvironment() {
             return !FMLLoader.isProduction();
         }
+    }
+}
+
+class ConfigScreen {
+    static void setupConfigScreen() {
+        //? if >=1.19 {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
+                new ConfigScreenHandler.ConfigScreenFactory(
+                        (client, parent) -> ModClothConfig.buildScreen(parent)
+                )
+        );
+        //?} elif >1.16.5 <1.19 {
+        /^ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, () ->
+                new ConfigGuiHandler.ConfigGuiFactory((client, parent) -> ModClothConfig.buildScreen(parent)
+        ));
+        ^///?} elif 1.16.5 {
+        /^ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () ->
+                (client, parent) -> ModClothConfig.buildScreen(parent)
+        );
+        ^///?}
     }
 }
 *///?}
