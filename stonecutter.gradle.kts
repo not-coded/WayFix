@@ -1,6 +1,6 @@
 plugins {
     id("dev.kikugie.stonecutter")
-    id("dev.architectury.loom") version "1.11.440" apply false
+    id("dev.architectury.loom") version "1.11.441" apply false
     id("architectury-plugin") version "3.4.162" apply false
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("me.modmuss50.mod-publish-plugin") version "1.0.0" apply false
