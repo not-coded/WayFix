@@ -8,6 +8,7 @@
   "ignoreDeps": [
     "dev.kikugie.stonecutter",
     "org.lwjgl",
-    "org.jetbrains.kotlin.jvm"
+    "org.jetbrains.kotlin.jvm",
+    "gradle"
   ]
 }
