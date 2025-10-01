@@ -8,7 +8,7 @@
     "MinecraftClientMixin",
     "MonitorFixWindowMixin",
     "MonitorTrackerMixin",
-    "TextFieldWidgetMixin",
+    "KeyboardMixin",
     "TitleScreenMixin",
     "WindowMixin"
   ],
