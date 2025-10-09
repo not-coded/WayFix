@@ -18,7 +18,7 @@ jobs:
           "temurin",
         ]
 
-        os: [ubuntu-24.04, windows-2022]
+        os: [ubuntu-24.04]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -33,7 +33,6 @@ jobs:
           distribution: ${{ matrix.distribution }}
           cache: 'gradle'
       - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: cache gradle
         uses: actions/cache@v4
@@ -50,7 +49,6 @@ jobs:
       - name: build
         run: ./gradlew chiseledBuild --build-cache --no-configuration-cache
       - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '21' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v4
         with:
           name: Artifacts
