@@ -36,9 +36,14 @@ public class WayFix {
 
     public static boolean supportsWayland() {
         try {
-            return GLFW.glfwPlatformSupported(GLFW.GLFW_PLATFORM_WAYLAND) &&
+            boolean wayland = GLFW.glfwPlatformSupported(GLFW.GLFW_PLATFORM_WAYLAND) &&
                     Objects.requireNonNullElse(System.getenv("XDG_SESSION_TYPE"),
                             "").toLowerCase().startsWith("wayland");
+            if(!wayland) {
+                WayFix.LOGGER.warn("WayFix is disabling itself due to lack of Wayland support.");
+                WayFix.LOGGER.warn("If you are not using Wayland, please remove this mod as it is meant to be used exclusively on Wayland.");
+            }
+            return wayland;
         } catch (NoSuchMethodError ignored) { // <3.3.0
             LOGGER.warn("WayFix is disabling itself due to the LWJGL Version being too low.");
             LOGGER.warn("Please update to a LWJGL version such as '3.3.1' or higher.");
