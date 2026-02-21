@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://cdn.modrinth.com/data/hxIWsdEF/400087fd0fb7e47b6a87d211c7a08138b855250e.png" width=128 height=128 alt="WayFix Logo"/>
+<img src="https://raw.githubusercontent.com/not-coded/wayfix/refs/heads/multiloader/src/main/resources/icon.png" width=128 height=128 alt="WayFix Logo"/>
 <br>
 
 # WayFix
