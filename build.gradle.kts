@@ -2,7 +2,7 @@ plugins {
     id("dev.architectury.loom")
     id("architectury-plugin")
     id("me.modmuss50.mod-publish-plugin")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
 }
 
 val minecraft = stonecutter.current.version
@@ -24,7 +24,7 @@ stonecutter.const("neoforge", isNeoForge)
 
 architectury.common(stonecutter.tree.branches.mapNotNull {
     if (stonecutter.current.project !in it) null
-    else it.prop("loom.platform")
+    else it.project.prop("loom.platform")
 })
 repositories {
     maven("https://maven.shedaniel.me/")
@@ -75,7 +75,13 @@ loom {
 java {
     withSourcesJar()
     val javaVersion = mod.dep("java")
-    val java = if (javaVersion == "8") JavaVersion.VERSION_1_8 else if(javaVersion == "17") JavaVersion.VERSION_17 else JavaVersion.VERSION_21
+    val java = when (javaVersion) {
+        "8" -> JavaVersion.VERSION_1_8
+        "17" -> JavaVersion.VERSION_17
+        "21" -> JavaVersion.VERSION_21
+        "25" -> JavaVersion.VERSION_25
+        else -> JavaVersion.VERSION_21
+    }
     targetCompatibility = java
     sourceCompatibility = java
 }
@@ -182,7 +188,13 @@ publishMods {
         minecraftVersions.addAll(mcVersions)
 
         val javaVersion = mod.dep("java")
-        val java = if (javaVersion == "8") JavaVersion.VERSION_1_8 else if(javaVersion == "17") JavaVersion.VERSION_17 else JavaVersion.VERSION_21
+        val java = when (javaVersion) {
+            "8" -> JavaVersion.VERSION_1_8
+            "17" -> JavaVersion.VERSION_17
+            "21" -> JavaVersion.VERSION_21
+            "25" -> JavaVersion.VERSION_25
+            else -> JavaVersion.VERSION_21
+        }
         javaVersions.add(java)
 
         clientRequired = true
