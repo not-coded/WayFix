@@ -16,13 +16,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static net.notcoded.wayfix.WayFix.isWayland;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-@Mixin(Window.class)
+@Mixin(value = Window.class, priority = 500)
 public abstract class MonitorFixWindowMixin {
 
     @Shadow protected abstract void onWindowPosChanged(long window, int x, int y);
+    @Shadow protected abstract void onWindowSizeChanged(long window, int width, int height);
 
     @Shadow @Final private long handle;
 
@@ -50,8 +53,6 @@ public abstract class MonitorFixWindowMixin {
             }
         }
 
-
-
         if(monitorID <= 0 || instance.getMonitor(monitorID) == null) {
             WayFix.LOGGER.warn("Error occurred while trying to set monitor.");
             WayFix.LOGGER.warn("Using primary monitor instead.");
@@ -60,7 +61,6 @@ public abstract class MonitorFixWindowMixin {
 
         return instance.getMonitor(monitorID);
     }
-
 
     // KDE Plasma ONLY
     @Inject(method = "updateWindowRegion", at = @At("HEAD"))
@@ -71,5 +71,22 @@ public abstract class MonitorFixWindowMixin {
         if(pos == null) return;
 
         onWindowPosChanged(this.handle, pos[0], pos[1]);
+    }
+
+    // Wayland fractional scaling fix: MC and mods (e.g. CWB) write physical monitor
+    // dimensions to window.width/height, but GLFW cursor coords use logical (surface)
+    // coords. Reconcile every frame by querying GLFW for the actual logical size.
+    @Inject(method = "swapBuffers", at = @At("HEAD"))
+    private void wayfix$reconcileWindowSize(CallbackInfo ci) {
+        if (!isWayland()) return;
+
+        int[] w = new int[1];
+        int[] h = new int[1];
+        GLFW.glfwGetWindowSize(this.handle, w, h);
+
+        Window self = (Window)(Object)this;
+        if (w[0] > 0 && h[0] > 0 && (self.getWidth() != w[0] || self.getHeight() != h[0])) {
+            onWindowSizeChanged(this.handle, w[0], h[0]);
+        }
     }
 }
